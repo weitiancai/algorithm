@@ -1,8 +1,6 @@
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class testAlgorithm {
     @Test
@@ -197,20 +195,20 @@ public class testAlgorithm {
 
 
     public int lengthOfLongestSubstring05(String s) {
-        Map<Character,Integer> map = new HashMap();
+        Map<Character, Integer> map = new HashMap();
         int maxlen = 0;
-        int left =0;
+        int left = 0;
         int len = s.length();
 
-        for(int i = 0 ;i< len ;i++){
+        for (int i = 0; i < len; i++) {
             Character c = s.charAt(i);
 
-            if(map.containsKey(c)){
-                left = Math.max(left,map.get(c)+1);
+            if (map.containsKey(c)) {
+                left = Math.max(left, map.get(c) + 1);
             }
 
-            map.put(c,i);
-            maxlen = Math.max(maxlen, i-left+1);
+            map.put(c, i);
+            maxlen = Math.max(maxlen, i - left + 1);
         }
         return maxlen;
     }
@@ -225,13 +223,13 @@ public class testAlgorithm {
         int maxEnd = 0; // 最长回文串的终点
         int maxLen = 1; //最长回文串的长度
 
-        boolean[][]dp = new boolean[strLen][strLen];
+        boolean[][] dp = new boolean[strLen][strLen];
         for (int r = 1; r < strLen; r++) {
             for (int l = 0; l < r; l++) {
                 if (s.charAt(l) == s.charAt(r) && (r - l <= 2 || dp[l + 1][r - 1])) {
                     dp[l][r] = true;
                     if (r - l + 1 > maxLen) {
-                        maxLen = r-l+1;
+                        maxLen = r - l + 1;
                         maxStart = l;
                         maxEnd = r;
                     }
@@ -240,5 +238,117 @@ public class testAlgorithm {
         }
 
         return s.substring(maxStart, maxEnd + 1);
+    }
+
+    @Test
+    public void testDouble() {
+//        Set<String> st = new HashSet<String>(){{add("string;");}};
+//        List<String> lt = new ArrayList<String>(){{add("string");}};
+//        HashMap<String,String> hashMap = new HashMap<String,String>(){{put("str","str");put("xxx","xxx");}};
+//        Map<Character, Character> map = new HashMap<Character,Character>(){
+//            {put('{','}');put('[',']');put('(',')');put('?','?');}
+//        };
+        int[] nums = new int[]{3};
+        int val = 3;
+        System.out.println("长度" + removeElement(nums, val));
+        for (int num : nums) {
+            System.out.println(num);
+        }
+    }
+
+//    public int removeElement(int[] nums, int val) {
+//        int length = nums.length;
+//        int left = 0;
+//        for (int right = 0; right < length; right++) {
+//            if (nums[right] != val) {
+//                nums[left++] = val;
+//            }
+//        }
+//        return length;
+//    }
+
+    public int removeElement(int[] nums, int val) {
+        int length = nums.length;
+        int right = length - 1;
+        int left = 0;
+        while (left < right) {
+            if (nums[left] == val) {
+                nums[left] = nums[right--];
+            } else {
+                left++;
+            }
+        }
+        return left;
+    }
+
+    //    public int removeElement(int[] nums, int val) {
+//        int right = nums.length - 1;
+//        int left = 0;
+//        int tmp = 0;
+//        int cnt = 0;
+//        while(left <= right){
+//            while(nums[left] != val){cnt++; if (left < nums.length-1) left++; else break;}
+//            while(nums[right] == val){
+//                if(right > 0)
+//                    right--;
+//                else break;
+//            }
+//            if (left >= right) {
+//                break;
+//            }
+//            tmp = nums[left];
+//            nums[left] = nums[right];
+//            nums[right] = tmp;
+//        }
+//        return cnt;
+//    }
+    @Test
+    public void testPos() {
+//        Set<String> st = new HashSet<String>(){{add("string;");}};
+//        List<String> lt = new ArrayList<String>(){{add("string");}};
+//        HashMap<String,String> hashMap = new HashMap<String,String>(){{put("str","str");put("xxx","xxx");}};
+//        Map<Character, Character> map = new HashMap<Character,Character>(){
+//            {put('{','}');put('[',']');put('(',')');put('?','?');}
+//        };
+        int[] nums = new int[]{1,3};
+        int val = 2;
+        System.out.println(getPosition(nums,0,nums.length-1,val,true));
+//        System.out.println(searchInsert(nums, val));
+
+    }
+
+    private int getPosition(int[] nums, int left, int right, int target,boolean flag) {
+        if (left > right) {
+//            int pos = flag ? right : left;
+//            return pos < 0 ? 0 : pos;
+            // mid往右那就是left 往左的时候本来是right-1 但是这个数字 会占用一格所以是left
+            return left;
+        }
+        int midPos = left + (right - left) / 2;
+        int mid = nums[midPos];
+        if (target < mid) {
+            return getPosition(nums, left, midPos - 1, target,true);
+        } else if (target > mid) {
+            return getPosition(nums, midPos + 1, right, target,false);
+        } else {
+            return midPos;
+        }
+    }
+
+
+    public int searchInsert(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+        while(left<=right){
+            int mid = (left + right)/2;
+            if(nums[mid]<target){
+                left = mid+1;
+            }else if(nums[mid]>target){
+                right = mid+1;
+            }else{
+                return mid;
+            }
+        }
+        return left;
     }
 }
