@@ -310,14 +310,14 @@ public class testAlgorithm {
 //        Map<Character, Character> map = new HashMap<Character,Character>(){
 //            {put('{','}');put('[',']');put('(',')');put('?','?');}
 //        };
-        int[] nums = new int[]{1,3};
+        int[] nums = new int[]{1, 3};
         int val = 2;
-        System.out.println(getPosition(nums,0,nums.length-1,val,true));
+        System.out.println(getPosition(nums, 0, nums.length - 1, val, true));
 //        System.out.println(searchInsert(nums, val));
 
     }
 
-    private int getPosition(int[] nums, int left, int right, int target,boolean flag) {
+    private int getPosition(int[] nums, int left, int right, int target, boolean flag) {
         if (left > right) {
 //            int pos = flag ? right : left;
 //            return pos < 0 ? 0 : pos;
@@ -327,9 +327,9 @@ public class testAlgorithm {
         int midPos = left + (right - left) / 2;
         int mid = nums[midPos];
         if (target < mid) {
-            return getPosition(nums, left, midPos - 1, target,true);
+            return getPosition(nums, left, midPos - 1, target, true);
         } else if (target > mid) {
-            return getPosition(nums, midPos + 1, right, target,false);
+            return getPosition(nums, midPos + 1, right, target, false);
         } else {
             return midPos;
         }
@@ -339,16 +339,108 @@ public class testAlgorithm {
     public int searchInsert(int[] nums, int target) {
         int left = 0;
         int right = nums.length - 1;
-        while(left<=right){
-            int mid = (left + right)/2;
-            if(nums[mid]<target){
-                left = mid+1;
-            }else if(nums[mid]>target){
-                right = mid+1;
-            }else{
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (nums[mid] < target) {
+                left = mid + 1;
+            } else if (nums[mid] > target) {
+                right = mid + 1;
+            } else {
                 return mid;
             }
         }
         return left;
+    }
+
+    @Test
+    public void testAddBinary() {
+        System.out.println(addBinary("1010", "1011"));
+    }
+
+    public String addBinary(String a, String b) {
+        int ra = a.length() - 1;
+        int rb = b.length() - 1;
+        int tmp = 0;
+        StringBuilder sb = new StringBuilder();
+        for (; ra >= 0 || rb >= 0; ra--, rb--) {
+            int sum = tmp;
+            sum += ra >= 0 ? a.charAt(ra) - '0' : 0;
+            sum += rb >= 0 ? b.charAt(rb) - '0' : 0;
+            sb.append(sum & 1);
+            tmp = sum >> 1;
+        }
+        sb.append(tmp == 1 ? "1" : "");
+        return sb.reverse().toString();
+    }
+
+    @Test
+    public void testMySqrt() {
+        System.out.println(mySqrt3(2147483647));
+    }
+
+    public int mySqrt(int x) {
+        long b = x;
+        long left = x;
+        while (b >= 1) {
+            if (multiplication(b, x)) {
+                b >>= 1;
+            } else {
+                left = b;
+                break;
+            }
+        }
+        long right = left * 2;
+
+        while (right - left > 1) {
+            long mid = (left + right) / 2;
+            if (multiplication(mid, x)) {
+                right = mid;
+            } else {
+                left = mid;
+            }
+        }
+        return (int) (right * right <= x ? right : left);
+    }
+
+    private boolean multiplication(long v, long x) {
+        return v * v > x;
+    }
+
+
+    public int mySqrt2(int x) {
+        int l = 0,r=x,ans= -1;
+        while(l<=r){
+            int mid = (l+r)/2;
+            if((long)mid*mid>x){
+                r = mid-1;
+            }else{
+                ans = l;
+                l = mid+1;
+            }
+        }
+        return ans;
+    }
+
+    public int mySqrt(int x) {
+        long left = x;
+        while (left >= 1) {
+            if ( left * left > x) {
+                left >>= 1;
+            } else {
+                break;
+            }
+        }
+        long right=x;
+        int ans = -1;
+        while(left<=right){
+            long mid = (long)(left+right)/2;
+            if(mid*mid>x){
+                right = mid -1;
+            }else{
+                ans= (int)mid;
+                left = mid+1;
+            }
+        }
+        return ans;
     }
 }
