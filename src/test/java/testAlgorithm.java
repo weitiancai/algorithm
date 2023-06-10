@@ -5,16 +5,41 @@ import java.util.*;
 public class testAlgorithm {
     @Test
     public void testArray() {
-        ListNode head = new ListNode(0);
+        ListNode head = new ListNode(1);
         ListNode head2 = new ListNode(1);
-        ListNode head3 = new ListNode(2);
-        ListNode head4 = new ListNode(3);
+        ListNode head3 = new ListNode(1);
+        ListNode head4 = new ListNode(1);
         head.next = head2;
         head2.next = head3;
         head3.next = head4;
 
-        ListNode begin = reverse(head, 1, 4);
-        showListNode(begin);
+//        ListNode begin = reverse(head, 1, 4);
+        deleteDuplicates(head);
+        showListNode(head);
+    }
+
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode pre = new ListNode(-1);
+        pre.next = head;
+        ListNode dommyNode;
+        dommyNode = pre;
+        ListNode tmp;
+        while (head != null) {
+            tmp = pre;
+            pre = head;
+            head = head.next;
+            if (head != null && pre.val == head.val) {
+                pre.next = head.next;
+            }
+            if (head == null) {
+                if (tmp.val == pre.val) {
+                    tmp.next = null;
+                } else {
+                    pre.next = null;
+                }
+            }
+        }
+        return dommyNode.next;
     }
 
     private void showListNode(ListNode begin) {
@@ -408,39 +433,62 @@ public class testAlgorithm {
 
 
     public int mySqrt2(int x) {
-        int l = 0,r=x,ans= -1;
-        while(l<=r){
-            int mid = (l+r)/2;
-            if((long)mid*mid>x){
-                r = mid-1;
-            }else{
+        int l = 0, r = x, ans = -1;
+        while (l <= r) {
+            int mid = (l + r) / 2;
+            if ((long) mid * mid > x) {
+                r = mid - 1;
+            } else {
                 ans = l;
-                l = mid+1;
+                l = mid + 1;
             }
         }
         return ans;
     }
 
-    public int mySqrt(int x) {
+    public int mySqrt3(int x) {
         long left = x;
         while (left >= 1) {
-            if ( left * left > x) {
+            if (left * left > x) {
                 left >>= 1;
             } else {
                 break;
             }
         }
-        long right=x;
+        long right = x;
         int ans = -1;
-        while(left<=right){
-            long mid = (long)(left+right)/2;
-            if(mid*mid>x){
-                right = mid -1;
-            }else{
-                ans= (int)mid;
-                left = mid+1;
+        while (left <= right) {
+            long mid = (long) (left + right) / 2;
+            if (mid * mid > x) {
+                right = mid - 1;
+            } else {
+                ans = (int) mid;
+                left = mid + 1;
             }
         }
         return ans;
+    }
+
+    @Test
+    public void mergeArrays() {
+        int[] a = new int[]{0};
+        merge(a, 0, new int[]{1}, 1);
+        for (int i = 0; i < a.length; i++) {
+            System.out.println(a[i]);
+        }
+    }
+
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int index = m + n - 1;
+        m--;
+        n--;
+        if (m < 0) {
+            for (int i = 0; i < n+1; i++) {
+                nums1[i] = nums2[i];
+            }
+        }
+        while (m >= 0 && n >= 0) {
+            nums1[index--] = (m >= 0 && nums1[m] > nums2[n]) ? nums1[m--] : nums2[n--];
+        }
     }
 }
