@@ -32,7 +32,10 @@ public class MergeSort {
             arr[left + m] = temp[m];
         }
     }
-
+    // 归并排序
+    // 平均 o(logn)
+    // 最快 o(logn)
+    // 最慢 o(logn)
     public static void main(String[] args) {
         int[] arr = {5, 2, 8, 4, 7, 1, 3};
         MergeSort.mergeSort(arr, 0, arr.length - 1);

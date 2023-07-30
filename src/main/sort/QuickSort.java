@@ -37,6 +37,11 @@ public class QuickSort {
 //        quickSort(arr, j+1, high);
 //
 //    }
+
+    // 快速排序
+    // 平均 o(logn)
+    // 最快 o(logn)
+    // 最慢 o(n^2)
     public static void quickSort(int[] arr, int left, int right) {
         if (left >= right) {
             return;
@@ -57,7 +62,8 @@ public class QuickSort {
                 arr[j--] = arr[i];
             }
         }
-        arr[i] = pivot;
+        // 这里arr[i]\arr[j]均可因为最后都是 i==j
+        arr[j] = pivot;
         quickSort(arr, left, i - 1);
         quickSort(arr, i + 1, right);
     }
