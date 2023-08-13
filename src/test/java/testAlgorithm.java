@@ -168,7 +168,7 @@ public class testAlgorithm {
     }
 
     //3. 无重复字符的最长子串
-    public int lengthOfLongestSubstring(String s) {
+    public int lengthOfLongestSubstringFail(String s) {
         int i = 0;
         int flag = 0;
         int length = 0;
@@ -275,9 +275,34 @@ public class testAlgorithm {
                 }
             }
         }
-
         return s.substring(maxStart, maxEnd + 1);
     }
+
+    public String longestPalindromeTrue(String s) {
+        if(s==null || s.length() < 2){
+            return s;
+        }
+        int strlength = s.length();
+        int maxleft = 0;
+        int maxright =0;
+        int maxlen = 0;
+        boolean dp[][] = new boolean[strlength][strlength];
+        char[] charArray = s.toCharArray();
+        for (int r = 1; r < charArray.length; r++) {
+            for (int l = 0; l < r; l++) {
+                if(charArray[l] == charArray[r] && (dp[l+1][r-1] || r-l<=2)){
+                    dp[l][r]=true;
+                    if(maxlen<r-l +1){
+                        maxlen = r-l+1;
+                        maxleft = l;
+                        maxright = r;
+                    }
+                }
+            }
+        }
+        return s.substring(maxleft, maxright + 1);
+    }
+
 
     @Test
     public void testDouble() {
@@ -691,5 +716,72 @@ public class testAlgorithm {
         for (int anInt : ints) {
             System.out.println(anInt);
         }
+    }
+//    暴力解法
+    public int lengthOfLongestSubstringBaoli(String s) {
+        int  maxlen = 0;
+        char[] chars = s.toCharArray();
+        Set<Character> charSet = new HashSet<>();
+        for(int i=0;i<chars.length;i++){
+            for(int j =i;j<chars.length+1;j++){
+                if(j<chars.length){
+                    if (!charSet.contains(chars[j])) {
+                        charSet.add(chars[j]);
+                    }else{
+                        maxlen = Math.max(j-i,maxlen);
+                        charSet.clear();
+                        break;
+                    }
+                } else if(j==chars.length){
+                    maxlen = Math.max(j-i,maxlen);
+                    charSet.clear();
+                    break;
+                }
+            }
+        }
+        return maxlen;
+    }
+    // o(n)解法
+    public int lengthOfLongestSubstring(String s) {
+        Set<Character> occ = new HashSet<>();
+        int n = s.length();
+        int rk = -1, ans= 0;
+        for (int i = 0; i < n; i++) {
+            if (i != 0) {
+                occ.remove(s.charAt(i-1));
+            }
+            while (rk + 1 < n && !occ.contains(s.charAt(rk + 1))) {
+                // 不断向右移动右指针
+                occ.add(s.charAt(rk+1));
+                ++rk;
+            }
+            ans = Math.max(ans, rk - i + 1);
+        }
+        return ans;
+    }
+
+    int lengthOfLongestSubstring2(String s) {
+        int ans = 0;
+        int rk = -1;
+        Set<Character> cset = new HashSet<>();
+        char[] chars = s.toCharArray();
+        int n =chars.length;
+        for(int i =0;i<n; i++){
+            if(i!=0){
+                cset.remove(chars[i-1]);
+            }
+            //右指针是可以一次性找到最右边的
+            while(rk+1<n && !cset.contains(chars[rk+1]) ){
+                cset.add(chars[rk+1]);
+                rk++;
+            }
+            ans = Math.max(ans,rk-i+1);
+        }
+        return ans;
+    }
+    @Test
+    public void longestDuplicatedStr(){
+        String str = "abcb";
+        System.out.println(lengthOfLongestSubstring2(str));
     }
 }
