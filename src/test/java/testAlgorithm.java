@@ -1,6 +1,7 @@
 import org.junit.Test;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public class testAlgorithm {
     @Test
@@ -17,8 +18,8 @@ public class testAlgorithm {
         deleteDuplicates(head);
         showListNode(head);
     }
-
-    public ListNode deleteDuplicates(ListNode head) {
+    //83
+    public ListNode deleteDuplicatesFail(ListNode head) {
         ListNode pre = new ListNode(-1);
         pre.next = head;
         ListNode dommyNode;
@@ -41,6 +42,19 @@ public class testAlgorithm {
         }
         return dommyNode.next;
     }
+
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode cur = head;
+        while(cur!=null&&cur.next!=null){
+            if(cur.val == cur.next.val){
+                cur.next = cur.next.next;
+            }else{
+                cur = cur.next;
+            }
+        }
+        return head;
+    }
+
 
     private void showListNode(ListNode begin) {
         do {
@@ -489,6 +503,193 @@ public class testAlgorithm {
         }
         while (m >= 0 && n >= 0) {
             nums1[index--] = (m >= 0 && nums1[m] > nums2[n]) ? nums1[m--] : nums2[n--];
+        }
+    }
+
+    public int[] twoSumFail(int[] nums, int target) {
+        if(nums.length == 2){
+            return new int[]{0,1};
+        }
+        for(int i= 0; i<nums.length; i++){
+            for(int j=i+1;i<=nums.length;j++){
+                if(nums[i]+nums[j]==target) {
+                    return new int[]{i, j};
+                }
+            }
+        }
+        return new int[]{999,999};
+    }
+
+    public int[] twoSum3(int[] nums, int target) {
+        Map<Integer, Integer> hashTable = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            if(hashTable.containsKey(target-nums[i])){
+                return new int[]{i,hashTable.get(target-nums[i])};
+            }
+            hashTable.put(nums[i],i);
+        }
+        return new int[0];
+    }
+
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String,List<String>> map = new HashMap<>();
+        for(String s : strs){
+            char[] chars = s.toCharArray();
+            Arrays.sort(chars);
+            String key = new String(chars);
+            List<String> valueList = map.getOrDefault(key, new ArrayList<String>());
+            valueList.add(key);
+        }
+        Collection<List<String>> values = map.values();
+        return new ArrayList<>(map.values());
+    }
+
+    public int longestConsecutiveFail(int[] nums) {
+        boolean [] rec = new boolean[2000000000];
+        for(int i =0;i<nums.length;i++){
+            rec[nums[i]+1000000000]=true;
+        }
+        int begin = 0;
+        int right = 0;
+        boolean cont = false;
+        int max = 1;
+        for(int i=0;i<rec.length;i++){
+            if(rec[i]){
+                if(!cont){ begin = i;}
+                cont = true;
+            }
+            if(!rec[i] && cont){
+                right = i;
+                max = Math.max(max,right-begin);
+                cont =false;
+            }
+        }
+        return max;
+    }
+
+    public int longestConsecutive(int[] nums) {
+        Set<Integer> num_set = new HashSet<Integer>();
+
+        for(int num:nums){
+            num_set.add(num);
+        }
+
+        int longestStreak = 0;
+
+        for(int num:num_set){
+            if(!num_set.contains(num-1)){
+                int currentNum = num;
+                int currentStreak = 1;
+                while(num_set.contains(currentNum+1)){
+                    currentNum+=1;
+                    currentStreak+=1;
+                }
+                longestStreak = Math.max(longestStreak, currentStreak);
+            }
+        }
+        return longestStreak;
+    }
+    @Test
+    public void twoSum2() {
+//        int[] a = new int[]{2,7,11,15};
+//        int[] ints = twoSum2(a, 9);
+//        for (int i = 0; i < ints.length; i++) {
+//            System.out.println(ints[i]);
+//        }
+        int[] a = new int[]{100,4,200,1,3,2};
+
+        System.out.println(longestConsecutive(a));
+
+    }
+
+
+    public int PrimeCount(int n){
+        int count = 0;
+        for (int i = 2; i <= n; i++) {
+            count += isPrime(i) ?1:0;
+        }
+        return count;
+    }
+
+    private boolean isPrime(int num) {
+        for (int i = 2; i*i<=num; i++){
+            if (num % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    @Test
+    public void testPrimeFunc(){
+        // 普通素数算法
+//        System.out.println(PrimeCount(100));
+        // 埃氏筛法
+        System.out.println(eratosThenes(100));
+
+    }
+
+    private int eratosThenes(int n) {
+        // false 代表素数 初始化
+        boolean[] primeArr = new boolean[n+1];
+        int count = 0;
+        for (int i = 2; i <= n; i++) {
+            if(!primeArr[i]){
+//                for (int j = 2 * i; j <= n; j += i) {
+                for (int j = i * i; j <= n; j += i) {
+                    primeArr[j] = true;
+                }
+                count++;
+            }
+        }
+        return count;
+    }
+
+
+    public int[] distinctDifferenceArray(int[] nums) {
+        Map<Integer, Set<Integer>> beforemap = new HashMap<>();
+        Map<Integer, Set<Integer>> aftermap = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            for (int k = i; k >= 0; k--) {
+                Set<Integer> set = beforemap.getOrDefault(i, new HashSet<>());
+                set.add(nums[k]);
+                beforemap.put(i,set);
+            }
+            for (int j = i+1; j<nums.length;j++){
+                Set<Integer> set2 = aftermap.getOrDefault(i, new HashSet<>());
+                set2.add(nums[j]);
+                aftermap.put(i,set2);
+            }
+        }
+        aftermap.put(nums.length-1,new HashSet<>());
+        int [] result = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            result[i] = beforemap.get(i).size()-aftermap.get(i).size();
+        }
+        return result;
+    }
+
+    public int[] distinctDifferenceArrayTrue(int[] nums) {
+        int n = nums.length;
+        int[] suf = new int[n+1];
+        Set<Integer> s = new HashSet<Integer>();
+        for (int i = n - 1; i > 0; i--) {
+            s.add(nums[i]);
+            suf[i] = s.size();
+        }
+
+        s.clear();
+        int[] ans = new int[n];
+        for (int i = 0; i < n; i++) {
+            s.add(nums[i]);
+            ans[i] = s.size()-suf[i+1];
+        }
+        return ans;
+    }
+    @Test
+    public void testDistinctDifferenceArray(){
+        int[] ints = distinctDifferenceArray(new int[]{1, 2, 3, 4, 5});
+        for (int anInt : ints) {
+            System.out.println(anInt);
         }
     }
 }
