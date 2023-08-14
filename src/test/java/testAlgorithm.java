@@ -779,9 +779,33 @@ public class testAlgorithm {
         }
         return ans;
     }
+
+
+    public int lengthOfLongestSubstringWrong(String s) {
+        int maxlen = 0;
+        int len = s.length();
+        int right = 0;
+        Set<Character> charSet = new HashSet<>();
+        for (int i = 0; i < len; i++) {
+            if(i!=0){
+                charSet.remove(s.charAt(i));
+//                charSet.remove(s.charAt(i-1));  这个才对
+            }
+//            while(right < len && !charSet.contains(s.charAt(right))){ 这个才对
+            while(right < len && !charSet.contains(right)){
+
+                charSet.add(s.charAt(right));
+                right++;
+            }
+
+            maxlen = Math.max(maxlen, right - i);
+        }
+
+        return maxlen;
+    }
     @Test
     public void longestDuplicatedStr(){
         String str = "abcb";
-        System.out.println(lengthOfLongestSubstring2(str));
+        System.out.println(lengthOfLongestSubstringWrong(str));
     }
 }
