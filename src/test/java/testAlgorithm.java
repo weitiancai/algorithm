@@ -803,6 +803,34 @@ public class testAlgorithm {
 
         return maxlen;
     }
+
+    // 状态转义方程
+//    dp[l][r] = dp[l+1][r-1] == true && char[l]=char[r]
+//    初始条件 r-l <=2 时两个元素 或者三个元素 char[l]=char[r]
+    public String longestPalindromeTrue2(String s) {
+        if (s == null || s.length() < 2) {
+            return s;
+        }
+        int maxlen = 0;
+        int maxLeft = 0;
+        int maxRight = 0;
+        char[] charArray = s.toCharArray();
+        int n = charArray.length;
+        boolean dp[][] = new boolean[n][n];
+        for (int r = 1; r < n; r++) {
+            for (int l = 0; l < r; l++) {
+                if(charArray[l]==charArray[r] && (r-l<=2 || dp[l+1][r-1])){  // 不是<=1
+                    dp[l][r] = true; //千万别忘记
+                    if (r - l + 1 > maxlen) {
+                        maxlen = r - l + 1;
+                        maxRight = r;
+                        maxLeft = l;
+                    }
+                }
+            }
+        }
+        return s.substring(maxLeft,maxRight+1);
+    }
     @Test
     public void longestDuplicatedStr(){
         String str = "abcb";
