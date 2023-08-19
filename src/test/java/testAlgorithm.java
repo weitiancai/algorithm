@@ -1,5 +1,6 @@
 import org.junit.Test;
 
+import javax.swing.tree.TreeNode;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -835,5 +836,46 @@ public class testAlgorithm {
     public void longestDuplicatedStr(){
         String str = "abcb";
         System.out.println(lengthOfLongestSubstringWrong(str));
+    }
+
+    public class TreeNode {
+     int val;
+     TreeNode left;
+     TreeNode right;
+     TreeNode() {}
+     TreeNode(int val) { this.val = val; }
+     TreeNode(int val, TreeNode left, TreeNode right) {
+         this.val = val;
+         this.left = left;
+         this.right = right;
+     }
+ }
+
+    public boolean isSymmetric(TreeNode root) {
+        return check(root,root);
+    }
+
+    public boolean check(TreeNode p, TreeNode q){
+        if (p == null && q == null) {
+            return true;
+        }
+        if (p == null || q == null) {
+            return false;
+        }
+        return p.val == q.val && check(p.left,q.right) && check(p.right,q.left);
+    }
+
+
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        middle_ergodic(root, list);
+        return list;
+    }
+
+    public void middle_ergodic(TreeNode root,List<Integer> list){
+        if(root == null) return;
+        middle_ergodic(root.left,list);
+        list.add(root.val);
+        middle_ergodic(root.right,list);
     }
 }
