@@ -3,6 +3,9 @@ import java.util.Arrays;
 public class HeapSort {
     // 堆  就是 左右孩子节点都比父节点小的书
     // 构造小顶堆 就是如果堆顶的数据放最后，那么就是降序
+//    最快 ologn
+//    最慢 ologn
+//     平均 ologn
     public static void main(String[] args) {
         int[] arr = new int[]{1, 3, 5,2, 0,10,6};
         System.out.println(Arrays.toString(arr));

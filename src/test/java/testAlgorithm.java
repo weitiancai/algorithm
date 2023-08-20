@@ -878,4 +878,200 @@ public class testAlgorithm {
         list.add(root.val);
         middle_ergodic(root.right,list);
     }
+
+
+    public ListNode reverseList(ListNode head) {
+        Stack<ListNode> stack = new Stack<>();
+        while (head != null) {
+            stack.push(head);
+            head = head.next;
+        }
+        ListNode dummyNode= new ListNode(-1);
+        if (stack.isEmpty()) {
+            return null;
+        }
+        ListNode newHead =stack.pop();
+        dummyNode.next = newHead;
+        while (!stack.isEmpty()) {
+            newHead.next = stack.pop();
+            newHead = newHead.next;
+            newHead.next = null;
+        }
+        return dummyNode.next;
+    }
+
+    public ListNode reverseList2(ListNode head) {
+        ListNode pre = null;
+        ListNode curr = head;
+        while (curr != null) {
+            ListNode next = curr.next;
+            curr.next = pre;
+            pre = curr;
+            curr = next;
+        }
+        return pre;
+    }
+
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        ListNode dummyNode = new ListNode(-1);
+        ListNode pre;
+        dummyNode.next = head;
+        pre = dummyNode;
+        int cnt = right - left;
+        while(--left > 0){
+            head = head.next;
+            pre = pre.next;
+        }
+        ListNode next;
+        while(cnt-->0){
+            next = head.next;
+            head.next = next.next;
+            next.next =pre.next;
+            pre.next = next;
+        }
+        return dummyNode.next;
+    }
+
+    @Test
+    public void testArrayw() {
+        ListNode head = new ListNode(1);
+        ListNode head2 = new ListNode(2);
+        ListNode head3 = new ListNode(3);
+        ListNode head4 = new ListNode(4);
+        head.next = head2;
+        head2.next = head3;
+        head3.next = head4;
+
+        ListNode newHead= reverseList2(head);
+        showListNode(newHead);
+    }
+
+    public void merge2(int[] nums1, int m, int[] nums2, int n) {
+        int length = m+n;
+
+        int left  = 0;
+        int right = 0;
+        if(m==0) {nums1 = nums2;
+//            for (int i : nums1) {
+//                System.out.println(i);
+//            }
+            return;}
+        if(n==0)  {return;}
+
+        while(length-- > 0){
+            if(left<m && right<n){
+                if(nums1[left] > nums2[right]){
+                    int tmp = nums1[left];
+                    nums1[left] = nums2[right];
+                    nums2[right] = tmp;
+                    left++;
+                }else{
+                    nums1[left] = nums1[left++];
+                }
+            }else if(left<m){
+                nums1[left] = nums1[left++];
+            }
+            else if(right<n){
+                int tmp = nums1[left];
+                nums1[left] = nums2[right];
+                nums2[right] = tmp;
+                left++;
+                right++;
+            }
+        }
+    }
+
+    // 既然空数组不让赋值的话，就用新数组代替了 还是不行
+    public void merge3(int[] nums1, int m, int[] nums2, int n) {
+        int length = m+n;
+
+        int left  = 0;
+        int right = 0;
+        if(m==0) {
+            nums1 = new int[nums2.length];
+            nums1=nums2;
+            System.out.println(nums1);
+            return;}
+        if(n==0)  {return;}
+
+        while(length-- > 0){
+            if(left<m && right<n){
+                if(nums1[left] > nums2[right]){
+                    int tmp = nums1[left];
+                    nums1[left] = nums2[right];
+                    nums2[right] = tmp;
+                    left++;
+                }else{
+                    nums1[left] = nums1[left++];
+                }
+            }else if(left<m){
+                nums1[left] = nums1[left++];
+            }
+            else if(right<n){
+                int tmp = nums1[left];
+                nums1[left] = nums2[right];
+                nums2[right] = tmp;
+                left++;
+                right++;
+            }
+        }
+        System.out.println(nums1);
+    }
+
+    private  void merge4(int[] nums1, int m, int[] nums2, int n){
+        while (n > 0 || m > 0) {
+            if(n==0) return;
+            if(m>0 && nums1[m-1]> nums2[n-1]){
+                nums1[m+n-1] = nums1[--m];
+            }else{
+                nums1[m+n-1] = nums2[--n];
+            }
+        }
+    }
+
+    @Test
+    public void testMerge() {
+//        int[] num = new int[]{1,2,3,0,0,0};
+//        int m =3;
+//        int[] num2 = new int[]{4,5,6};
+//        int n = 3;
+//        即使你通过赋值操作改变了数组变量的引用，也无法改变原始数组对象的长度
+        int[] num = new int[]{};
+//        int[] num = new int[]{1,2,3,0,0,0};
+        int m = 0;
+        System.out.println(num);//1
+        int[] num2 = new int[]{1};
+//        int[] num2 = new int[]{4,5,6};
+        int n = 1;
+        System.out.println(num2);//2
+        merge4(num, m, num2, n);//2
+        System.out.println(num);//1
+        for (int i : num) {
+            System.out.println(i);
+        }
+    }
+    public int maxDepth(TreeNode root) {
+        if(root == null) return 0;
+        //one path
+        return Math.max(get_depth(root.left), get_depth(root.right))+1;
+    }
+
+    private int get_depth(TreeNode root){
+        if(root == null) return 0;
+        if(root.left == null && root.right == null) return 1;
+        if(root.left != null && root.right != null) return Math.max(get_depth(root.left), get_depth(root.right))+1;
+        if(root.left == null && root.right != null) return get_depth(root.right)+1;
+        if(root.left != null && root.right == null) return get_depth(root.left)+1;
+        return 0;
+    }
+
+    public int maxDepth(TreeNode root) {
+        if (root == null)
+            return 0;
+        else {
+            int leftHeight = maxDepth(root.left);
+            int rightHeight = maxDepth(root.right);
+            return Math.max(leftHeight, rightHeight) + 1;
+        }
+    }
 }
