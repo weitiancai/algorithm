@@ -1050,7 +1050,7 @@ public class testAlgorithm {
             System.out.println(i);
         }
     }
-    public int maxDepth(TreeNode root) {
+    public int maxDepth22(TreeNode root) {
         if(root == null) return 0;
         //one path
         return Math.max(get_depth(root.left), get_depth(root.right))+1;
