@@ -1,8 +1,8 @@
+import Utils.TreeUtils;
+import leetCode.TreeNode;
 import org.junit.Test;
 
-import javax.swing.tree.TreeNode;
 import java.util.*;
-import java.util.stream.Stream;
 
 public class testAlgorithm {
     @Test
@@ -19,6 +19,7 @@ public class testAlgorithm {
         deleteDuplicates(head);
         showListNode(head);
     }
+
     //83
     public ListNode deleteDuplicatesFail(ListNode head) {
         ListNode pre = new ListNode(-1);
@@ -46,10 +47,10 @@ public class testAlgorithm {
 
     public ListNode deleteDuplicates(ListNode head) {
         ListNode cur = head;
-        while(cur!=null&&cur.next!=null){
-            if(cur.val == cur.next.val){
+        while (cur != null && cur.next != null) {
+            if (cur.val == cur.next.val) {
                 cur.next = cur.next.next;
-            }else{
+            } else {
                 cur = cur.next;
             }
         }
@@ -280,21 +281,21 @@ public class testAlgorithm {
     }
 
     public String longestPalindromeTrue(String s) {
-        if(s==null || s.length() < 2){
+        if (s == null || s.length() < 2) {
             return s;
         }
         int strlength = s.length();
         int maxleft = 0;
-        int maxright =0;
+        int maxright = 0;
         int maxlen = 0;
         boolean dp[][] = new boolean[strlength][strlength];
         char[] charArray = s.toCharArray();
         for (int r = 1; r < charArray.length; r++) {
             for (int l = 0; l < r; l++) {
-                if(charArray[l] == charArray[r] && (dp[l+1][r-1] || r-l<=2)){
-                    dp[l][r]=true;
-                    if(maxlen<r-l +1){
-                        maxlen = r-l+1;
+                if (charArray[l] == charArray[r] && (dp[l + 1][r - 1] || r - l <= 2)) {
+                    dp[l][r] = true;
+                    if (maxlen < r - l + 1) {
+                        maxlen = r - l + 1;
                         maxleft = l;
                         maxright = r;
                     }
@@ -523,7 +524,7 @@ public class testAlgorithm {
         m--;
         n--;
         if (m < 0) {
-            for (int i = 0; i < n+1; i++) {
+            for (int i = 0; i < n + 1; i++) {
                 nums1[i] = nums2[i];
             }
         }
@@ -533,33 +534,33 @@ public class testAlgorithm {
     }
 
     public int[] twoSumFail(int[] nums, int target) {
-        if(nums.length == 2){
-            return new int[]{0,1};
+        if (nums.length == 2) {
+            return new int[]{0, 1};
         }
-        for(int i= 0; i<nums.length; i++){
-            for(int j=i+1;i<=nums.length;j++){
-                if(nums[i]+nums[j]==target) {
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; i <= nums.length; j++) {
+                if (nums[i] + nums[j] == target) {
                     return new int[]{i, j};
                 }
             }
         }
-        return new int[]{999,999};
+        return new int[]{999, 999};
     }
 
     public int[] twoSum3(int[] nums, int target) {
         Map<Integer, Integer> hashTable = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
-            if(hashTable.containsKey(target-nums[i])){
-                return new int[]{i,hashTable.get(target-nums[i])};
+            if (hashTable.containsKey(target - nums[i])) {
+                return new int[]{i, hashTable.get(target - nums[i])};
             }
-            hashTable.put(nums[i],i);
+            hashTable.put(nums[i], i);
         }
         return new int[0];
     }
 
     public List<List<String>> groupAnagrams(String[] strs) {
-        Map<String,List<String>> map = new HashMap<>();
-        for(String s : strs){
+        Map<String, List<String>> map = new HashMap<>();
+        for (String s : strs) {
             char[] chars = s.toCharArray();
             Arrays.sort(chars);
             String key = new String(chars);
@@ -571,23 +572,25 @@ public class testAlgorithm {
     }
 
     public int longestConsecutiveFail(int[] nums) {
-        boolean [] rec = new boolean[2000000000];
-        for(int i =0;i<nums.length;i++){
-            rec[nums[i]+1000000000]=true;
+        boolean[] rec = new boolean[2000000000];
+        for (int i = 0; i < nums.length; i++) {
+            rec[nums[i] + 1000000000] = true;
         }
         int begin = 0;
         int right = 0;
         boolean cont = false;
         int max = 1;
-        for(int i=0;i<rec.length;i++){
-            if(rec[i]){
-                if(!cont){ begin = i;}
+        for (int i = 0; i < rec.length; i++) {
+            if (rec[i]) {
+                if (!cont) {
+                    begin = i;
+                }
                 cont = true;
             }
-            if(!rec[i] && cont){
+            if (!rec[i] && cont) {
                 right = i;
-                max = Math.max(max,right-begin);
-                cont =false;
+                max = Math.max(max, right - begin);
+                cont = false;
             }
         }
         return max;
@@ -596,25 +599,26 @@ public class testAlgorithm {
     public int longestConsecutive(int[] nums) {
         Set<Integer> num_set = new HashSet<Integer>();
 
-        for(int num:nums){
+        for (int num : nums) {
             num_set.add(num);
         }
 
         int longestStreak = 0;
 
-        for(int num:num_set){
-            if(!num_set.contains(num-1)){
+        for (int num : num_set) {
+            if (!num_set.contains(num - 1)) {
                 int currentNum = num;
                 int currentStreak = 1;
-                while(num_set.contains(currentNum+1)){
-                    currentNum+=1;
-                    currentStreak+=1;
+                while (num_set.contains(currentNum + 1)) {
+                    currentNum += 1;
+                    currentStreak += 1;
                 }
                 longestStreak = Math.max(longestStreak, currentStreak);
             }
         }
         return longestStreak;
     }
+
     @Test
     public void twoSum2() {
 //        int[] a = new int[]{2,7,11,15};
@@ -622,31 +626,32 @@ public class testAlgorithm {
 //        for (int i = 0; i < ints.length; i++) {
 //            System.out.println(ints[i]);
 //        }
-        int[] a = new int[]{100,4,200,1,3,2};
+        int[] a = new int[]{100, 4, 200, 1, 3, 2};
 
         System.out.println(longestConsecutive(a));
 
     }
 
 
-    public int PrimeCount(int n){
+    public int PrimeCount(int n) {
         int count = 0;
         for (int i = 2; i <= n; i++) {
-            count += isPrime(i) ?1:0;
+            count += isPrime(i) ? 1 : 0;
         }
         return count;
     }
 
     private boolean isPrime(int num) {
-        for (int i = 2; i*i<=num; i++){
+        for (int i = 2; i * i <= num; i++) {
             if (num % i == 0) {
                 return false;
             }
         }
         return true;
     }
+
     @Test
-    public void testPrimeFunc(){
+    public void testPrimeFunc() {
         // 普通素数算法
 //        System.out.println(PrimeCount(100));
         // 埃氏筛法
@@ -656,10 +661,10 @@ public class testAlgorithm {
 
     private int eratosThenes(int n) {
         // false 代表素数 初始化
-        boolean[] primeArr = new boolean[n+1];
+        boolean[] primeArr = new boolean[n + 1];
         int count = 0;
         for (int i = 2; i <= n; i++) {
-            if(!primeArr[i]){
+            if (!primeArr[i]) {
 //                for (int j = 2 * i; j <= n; j += i) {
                 for (int j = i * i; j <= n; j += i) {
                     primeArr[j] = true;
@@ -678,25 +683,25 @@ public class testAlgorithm {
             for (int k = i; k >= 0; k--) {
                 Set<Integer> set = beforemap.getOrDefault(i, new HashSet<>());
                 set.add(nums[k]);
-                beforemap.put(i,set);
+                beforemap.put(i, set);
             }
-            for (int j = i+1; j<nums.length;j++){
+            for (int j = i + 1; j < nums.length; j++) {
                 Set<Integer> set2 = aftermap.getOrDefault(i, new HashSet<>());
                 set2.add(nums[j]);
-                aftermap.put(i,set2);
+                aftermap.put(i, set2);
             }
         }
-        aftermap.put(nums.length-1,new HashSet<>());
-        int [] result = new int[nums.length];
+        aftermap.put(nums.length - 1, new HashSet<>());
+        int[] result = new int[nums.length];
         for (int i = 0; i < nums.length; i++) {
-            result[i] = beforemap.get(i).size()-aftermap.get(i).size();
+            result[i] = beforemap.get(i).size() - aftermap.get(i).size();
         }
         return result;
     }
 
     public int[] distinctDifferenceArrayTrue(int[] nums) {
         int n = nums.length;
-        int[] suf = new int[n+1];
+        int[] suf = new int[n + 1];
         Set<Integer> s = new HashSet<Integer>();
         for (int i = n - 1; i > 0; i--) {
             s.add(nums[i]);
@@ -707,34 +712,36 @@ public class testAlgorithm {
         int[] ans = new int[n];
         for (int i = 0; i < n; i++) {
             s.add(nums[i]);
-            ans[i] = s.size()-suf[i+1];
+            ans[i] = s.size() - suf[i + 1];
         }
         return ans;
     }
+
     @Test
-    public void testDistinctDifferenceArray(){
+    public void testDistinctDifferenceArray() {
         int[] ints = distinctDifferenceArray(new int[]{1, 2, 3, 4, 5});
         for (int anInt : ints) {
             System.out.println(anInt);
         }
     }
-//    暴力解法
+
+    //    暴力解法
     public int lengthOfLongestSubstringBaoli(String s) {
-        int  maxlen = 0;
+        int maxlen = 0;
         char[] chars = s.toCharArray();
         Set<Character> charSet = new HashSet<>();
-        for(int i=0;i<chars.length;i++){
-            for(int j =i;j<chars.length+1;j++){
-                if(j<chars.length){
+        for (int i = 0; i < chars.length; i++) {
+            for (int j = i; j < chars.length + 1; j++) {
+                if (j < chars.length) {
                     if (!charSet.contains(chars[j])) {
                         charSet.add(chars[j]);
-                    }else{
-                        maxlen = Math.max(j-i,maxlen);
+                    } else {
+                        maxlen = Math.max(j - i, maxlen);
                         charSet.clear();
                         break;
                     }
-                } else if(j==chars.length){
-                    maxlen = Math.max(j-i,maxlen);
+                } else if (j == chars.length) {
+                    maxlen = Math.max(j - i, maxlen);
                     charSet.clear();
                     break;
                 }
@@ -742,18 +749,19 @@ public class testAlgorithm {
         }
         return maxlen;
     }
+
     // o(n)解法
     public int lengthOfLongestSubstring(String s) {
         Set<Character> occ = new HashSet<>();
         int n = s.length();
-        int rk = -1, ans= 0;
+        int rk = -1, ans = 0;
         for (int i = 0; i < n; i++) {
             if (i != 0) {
-                occ.remove(s.charAt(i-1));
+                occ.remove(s.charAt(i - 1));
             }
             while (rk + 1 < n && !occ.contains(s.charAt(rk + 1))) {
                 // 不断向右移动右指针
-                occ.add(s.charAt(rk+1));
+                occ.add(s.charAt(rk + 1));
                 ++rk;
             }
             ans = Math.max(ans, rk - i + 1);
@@ -766,17 +774,17 @@ public class testAlgorithm {
         int rk = -1;
         Set<Character> cset = new HashSet<>();
         char[] chars = s.toCharArray();
-        int n =chars.length;
-        for(int i =0;i<n; i++){
-            if(i!=0){
-                cset.remove(chars[i-1]);
+        int n = chars.length;
+        for (int i = 0; i < n; i++) {
+            if (i != 0) {
+                cset.remove(chars[i - 1]);
             }
             //右指针是可以一次性找到最右边的
-            while(rk+1<n && !cset.contains(chars[rk+1]) ){
-                cset.add(chars[rk+1]);
+            while (rk + 1 < n && !cset.contains(chars[rk + 1])) {
+                cset.add(chars[rk + 1]);
                 rk++;
             }
-            ans = Math.max(ans,rk-i+1);
+            ans = Math.max(ans, rk - i + 1);
         }
         return ans;
     }
@@ -788,12 +796,12 @@ public class testAlgorithm {
         int right = 0;
         Set<Character> charSet = new HashSet<>();
         for (int i = 0; i < len; i++) {
-            if(i!=0){
+            if (i != 0) {
                 charSet.remove(s.charAt(i));
 //                charSet.remove(s.charAt(i-1));  这个才对
             }
 //            while(right < len && !charSet.contains(s.charAt(right))){ 这个才对
-            while(right < len && !charSet.contains(right)){
+            while (right < len && !charSet.contains(right)) {
 
                 charSet.add(s.charAt(right));
                 right++;
@@ -820,7 +828,7 @@ public class testAlgorithm {
         boolean dp[][] = new boolean[n][n];
         for (int r = 1; r < n; r++) {
             for (int l = 0; l < r; l++) {
-                if(charArray[l]==charArray[r] && (r-l<=2 || dp[l+1][r-1])){  // 不是<=1
+                if (charArray[l] == charArray[r] && (r - l <= 2 || dp[l + 1][r - 1])) {  // 不是<=1
                     dp[l][r] = true; //千万别忘记
                     if (r - l + 1 > maxlen) {
                         maxlen = r - l + 1;
@@ -830,39 +838,29 @@ public class testAlgorithm {
                 }
             }
         }
-        return s.substring(maxLeft,maxRight+1);
+        return s.substring(maxLeft, maxRight + 1);
     }
+
     @Test
-    public void longestDuplicatedStr(){
+    public void longestDuplicatedStr() {
         String str = "abcb";
         System.out.println(lengthOfLongestSubstringWrong(str));
     }
 
-    public class TreeNode {
-     int val;
-     TreeNode left;
-     TreeNode right;
-     TreeNode() {}
-     TreeNode(int val) { this.val = val; }
-     TreeNode(int val, TreeNode left, TreeNode right) {
-         this.val = val;
-         this.left = left;
-         this.right = right;
-     }
- }
+
 
     public boolean isSymmetric(TreeNode root) {
-        return check(root,root);
+        return check(root, root);
     }
 
-    public boolean check(TreeNode p, TreeNode q){
+    public boolean check(TreeNode p, TreeNode q) {
         if (p == null && q == null) {
             return true;
         }
         if (p == null || q == null) {
             return false;
         }
-        return p.val == q.val && check(p.left,q.right) && check(p.right,q.left);
+        return p.val == q.val && check(p.left, q.right) && check(p.right, q.left);
     }
 
 
@@ -872,11 +870,11 @@ public class testAlgorithm {
         return list;
     }
 
-    public void middle_ergodic(TreeNode root,List<Integer> list){
-        if(root == null) return;
-        middle_ergodic(root.left,list);
+    public void middle_ergodic(TreeNode root, List<Integer> list) {
+        if (root == null) return;
+        middle_ergodic(root.left, list);
         list.add(root.val);
-        middle_ergodic(root.right,list);
+        middle_ergodic(root.right, list);
     }
 
 
@@ -886,11 +884,11 @@ public class testAlgorithm {
             stack.push(head);
             head = head.next;
         }
-        ListNode dummyNode= new ListNode(-1);
+        ListNode dummyNode = new ListNode(-1);
         if (stack.isEmpty()) {
             return null;
         }
-        ListNode newHead =stack.pop();
+        ListNode newHead = stack.pop();
         dummyNode.next = newHead;
         while (!stack.isEmpty()) {
             newHead.next = stack.pop();
@@ -918,15 +916,15 @@ public class testAlgorithm {
         dummyNode.next = head;
         pre = dummyNode;
         int cnt = right - left;
-        while(--left > 0){
+        while (--left > 0) {
             head = head.next;
             pre = pre.next;
         }
         ListNode next;
-        while(cnt-->0){
+        while (cnt-- > 0) {
             next = head.next;
             head.next = next.next;
-            next.next =pre.next;
+            next.next = pre.next;
             pre.next = next;
         }
         return dummyNode.next;
@@ -942,36 +940,39 @@ public class testAlgorithm {
         head2.next = head3;
         head3.next = head4;
 
-        ListNode newHead= reverseList2(head);
+        ListNode newHead = reverseList2(head);
         showListNode(newHead);
     }
 
     public void merge2(int[] nums1, int m, int[] nums2, int n) {
-        int length = m+n;
+        int length = m + n;
 
-        int left  = 0;
+        int left = 0;
         int right = 0;
-        if(m==0) {nums1 = nums2;
+        if (m == 0) {
+            nums1 = nums2;
 //            for (int i : nums1) {
 //                System.out.println(i);
 //            }
-            return;}
-        if(n==0)  {return;}
+            return;
+        }
+        if (n == 0) {
+            return;
+        }
 
-        while(length-- > 0){
-            if(left<m && right<n){
-                if(nums1[left] > nums2[right]){
+        while (length-- > 0) {
+            if (left < m && right < n) {
+                if (nums1[left] > nums2[right]) {
                     int tmp = nums1[left];
                     nums1[left] = nums2[right];
                     nums2[right] = tmp;
                     left++;
-                }else{
+                } else {
                     nums1[left] = nums1[left++];
                 }
-            }else if(left<m){
+            } else if (left < m) {
                 nums1[left] = nums1[left++];
-            }
-            else if(right<n){
+            } else if (right < n) {
                 int tmp = nums1[left];
                 nums1[left] = nums2[right];
                 nums2[right] = tmp;
@@ -983,31 +984,33 @@ public class testAlgorithm {
 
     // 既然空数组不让赋值的话，就用新数组代替了 还是不行
     public void merge3(int[] nums1, int m, int[] nums2, int n) {
-        int length = m+n;
+        int length = m + n;
 
-        int left  = 0;
+        int left = 0;
         int right = 0;
-        if(m==0) {
+        if (m == 0) {
             nums1 = new int[nums2.length];
-            nums1=nums2;
+            nums1 = nums2;
             System.out.println(nums1);
-            return;}
-        if(n==0)  {return;}
+            return;
+        }
+        if (n == 0) {
+            return;
+        }
 
-        while(length-- > 0){
-            if(left<m && right<n){
-                if(nums1[left] > nums2[right]){
+        while (length-- > 0) {
+            if (left < m && right < n) {
+                if (nums1[left] > nums2[right]) {
                     int tmp = nums1[left];
                     nums1[left] = nums2[right];
                     nums2[right] = tmp;
                     left++;
-                }else{
+                } else {
                     nums1[left] = nums1[left++];
                 }
-            }else if(left<m){
+            } else if (left < m) {
                 nums1[left] = nums1[left++];
-            }
-            else if(right<n){
+            } else if (right < n) {
                 int tmp = nums1[left];
                 nums1[left] = nums2[right];
                 nums2[right] = tmp;
@@ -1018,13 +1021,13 @@ public class testAlgorithm {
         System.out.println(nums1);
     }
 
-    private  void merge4(int[] nums1, int m, int[] nums2, int n){
+    private void merge4(int[] nums1, int m, int[] nums2, int n) {
         while (n > 0 || m > 0) {
-            if(n==0) return;
-            if(m>0 && nums1[m-1]> nums2[n-1]){
-                nums1[m+n-1] = nums1[--m];
-            }else{
-                nums1[m+n-1] = nums2[--n];
+            if (n == 0) return;
+            if (m > 0 && nums1[m - 1] > nums2[n - 1]) {
+                nums1[m + n - 1] = nums1[--m];
+            } else {
+                nums1[m + n - 1] = nums2[--n];
             }
         }
     }
@@ -1050,28 +1053,68 @@ public class testAlgorithm {
             System.out.println(i);
         }
     }
+
     public int maxDepth22(TreeNode root) {
-        if(root == null) return 0;
+        if (root == null) return 0;
         //one path
-        return Math.max(get_depth(root.left), get_depth(root.right))+1;
+        return Math.max(get_depth(root.left), get_depth(root.right)) + 1;
     }
 
-    private int get_depth(TreeNode root){
-        if(root == null) return 0;
-        if(root.left == null && root.right == null) return 1;
-        if(root.left != null && root.right != null) return Math.max(get_depth(root.left), get_depth(root.right))+1;
-        if(root.left == null && root.right != null) return get_depth(root.right)+1;
-        if(root.left != null && root.right == null) return get_depth(root.left)+1;
+    private int get_depth(TreeNode root) {
+        if (root == null) return 0;
+        if (root.left == null && root.right == null) return 1;
+        if (root.left != null && root.right != null) return Math.max(get_depth(root.left), get_depth(root.right)) + 1;
+        if (root.left == null && root.right != null) return get_depth(root.right) + 1;
+        if (root.left != null && root.right == null) return get_depth(root.left) + 1;
         return 0;
     }
 
     public int maxDepth(TreeNode root) {
-        if (root == null)
-            return 0;
-        else {
-            int leftHeight = maxDepth(root.left);
-            int rightHeight = maxDepth(root.right);
-            return Math.max(leftHeight, rightHeight) + 1;
+//        左侧递归返回2
+//        左侧递归返回2
+//        右侧递归返回2
+//        右侧递归返回4
+//        5
+//        if (root == null) return 0;
+//        int l = 0, r = 0;
+//        if (root.left != null) {
+//            l = maxDepth(root.left)+1;
+//            System.out.println("左侧递归返回" +l);
+//        }
+//        if (root.right != null) {
+//            r = maxDepth(root.right)+1;
+//            System.out.println("右侧递归返回" +r);
+//        }
+//        return Math.max(l, r)+1;
+        if (root == null) return 0;
+        int l = 0, r = 0;
+        if (root.left != null) {
+            l = maxDepth(root.left);
+            System.out.println("左侧递归返回" +l);
         }
+        if (root.right != null) {
+            r = maxDepth(root.right);
+            System.out.println("右侧递归返回" +r);
+        }
+        return Math.max(l, r)+1;
+//        左侧递归返回1
+//        左侧递归返回1
+//        右侧递归返回1
+//        右侧递归返回2
+//        3
+    }
+
+
+
+
+
+
+
+    @Test
+    public void HashMapTest() {
+        Integer[] num = new Integer[]{3,9,20,null,null,15,7};
+        TreeNode root = TreeUtils.intArrayToTreeNode(num);
+        int deep = maxDepth(root);
+        System.out.println(deep);
     }
 }
