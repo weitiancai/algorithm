@@ -557,6 +557,30 @@ public class testAlgorithm {
         }
         return new int[0];
     }
+    public int[] twoSum7(int[] nums, int target) {
+        Map<Integer,Integer> map = new HashMap<>();
+        for(int i =0;i<nums.length; i++){
+            if(map.containsKey(target-nums[i])){
+                return new int[]{nums[i],map.get(target-nums[i])};
+            }
+            map.put(nums[i],i);
+        }
+        return new int[0];
+    }
+
+    public int[] twoSum4(int[] nums, int target) {
+        int left =0, right =0;
+        Map<Integer,Integer> map = new HashMap<>();
+        for(int i =0;i<nums.length; i++){
+            if(!map.containsKey(target-nums[i])){
+                map.put(nums[i],i);
+            }else{
+                right=i;
+                left = map.get(target-nums[i]);
+            }
+        }
+        return new int[]{nums[left],nums[right]};
+    }
 
     public List<List<String>> groupAnagrams(String[] strs) {
         Map<String, List<String>> map = new HashMap<>();
@@ -1116,5 +1140,80 @@ public class testAlgorithm {
         TreeNode root = TreeUtils.intArrayToTreeNode(num);
         int deep = maxDepth(root);
         System.out.println(deep);
+    }
+
+    public int minDepth(TreeNode root) {
+        if(root==null) return 0;
+        return Math.min(minDepth(root.left),minDepth(root.right))+1;
+    }
+
+    @Test
+    public void minDepth() {
+        Integer[] num = new Integer[]{2,null,3,null,4,null,5,null,6};
+        TreeNode root = TreeUtils.intArrayToTreeNode(num);
+        int deep = minDepth(root);
+        System.out.println(deep);
+    }
+    //最长递增子序列
+    public int lengthOfLIS(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        }
+        int[] dp = new int[nums.length];
+        dp[0] = 1;
+        int max = 1; // 中药
+        for (int i = 1; i < nums.length; i++) {
+            dp[i] = 1;  //重要
+            for (int j = 0; j < i; j++) {
+                if(nums[i]>nums[j]){
+                    dp[i] = Math.max(dp[i],dp[j]+1);
+                }
+            }
+            max = Math.max(max,dp[i]);
+        }
+        return max;
+    }
+
+
+    public int findLengthOfLCISFail(int[] nums) {
+        if(nums.length==0) return 0;
+        int[] diff= new int[nums.length];
+        int max = 0;
+        for(int i = 0;i<nums.length;i++){
+            if(i == 0) diff[0] =1;
+            else if(nums[i] < nums[i-1]){
+                diff[i] = 1;
+            }
+            else {
+                diff[i] = nums[i] - nums[i-1];
+            }
+        }
+        int cnt = 0;
+        int i = 0;
+        while( i <nums.length){
+            while( i<nums.length && diff[i] > 0){
+                cnt++;
+                i++;
+            }
+            if(i<nums.length && diff[i]<=0){i++;}
+            max = Math.max(max,cnt);
+            cnt = 0;
+        }
+        return max;
+    }
+    public int findLengthOfLCIS(int[] nums) {
+        int ans= 0;
+        int n = nums.length;
+        int start= 0;
+        for (int i = 0; i < n; i++) {
+            if(i>0 && nums[i] <= nums[i -1]) start = i;
+            ans = Math.max(ans, i - start + 1);
+        }
+        return ans;
+    }
+    @Test
+    public void findLengthOfLCISTest() {
+        int[] num = new int[]{1,3,5,4,2,3,4,5};
+        System.out.println(findLengthOfLCIS(num));
     }
 }
