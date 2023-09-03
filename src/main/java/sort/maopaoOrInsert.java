@@ -1,3 +1,5 @@
+package sort;
+
 public class maopaoOrInsert {
     public static void main(String[] args) {
         int[] arr = new int[] {435,8,24,2,9,456,45,63,34};

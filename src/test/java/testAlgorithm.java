@@ -1,6 +1,7 @@
+import Utils.TreeUtils;
+import leetCode.TreeNode;
 import org.junit.Test;
 
-import javax.swing.tree.TreeNode;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
@@ -33,6 +34,7 @@ public class testAlgorithm {
         deleteDuplicates(head);
         showListNode(head);
     }
+
     //83
     public ListNode deleteDuplicatesFail(ListNode head) {
         ListNode pre = new ListNode(-1);
@@ -60,10 +62,10 @@ public class testAlgorithm {
 
     public ListNode deleteDuplicates(ListNode head) {
         ListNode cur = head;
-        while(cur!=null&&cur.next!=null){
-            if(cur.val == cur.next.val){
+        while (cur != null && cur.next != null) {
+            if (cur.val == cur.next.val) {
                 cur.next = cur.next.next;
-            }else{
+            } else {
                 cur = cur.next;
             }
         }
@@ -1087,36 +1089,5 @@ public class testAlgorithm {
             int rightHeight = maxDepth(root.right);
             return Math.max(leftHeight, rightHeight) + 1;
         }
-    }
-
-    @Test
-    public void testHashMap(){
-        Map<Integer,Integer> map = new HashMap<Integer,Integer>(){{put(1,1);
-            put(2, 2);}};
-//        for (Integer key : map.keySet()) {
-//            if (key == 1) {
-//               map.remove(1);
-//            }
-//        }
-        // 调用 nextNode
-        Iterator var2 = map.keySet().iterator();
-
-        //          每次迭代都要校验一次 modCount 和 expectedModCount
-        while(var2.hasNext()) {
-            Integer key = (Integer)var2.next();
-            if (key == 1) {
-                map.remove(1);
-//                var2.remove();
-            }
-        }
-
-//        final HashMap.Node<K,V> nextNode() {
-//            HashMap.Node<K,V>[] t;
-//            HashMap.Node<K,V> e = next;
-//            if (modCount != expectedModCount)
-//                throw new ConcurrentModificationException();
-
-
-        ConcurrentHashMap concurrentHashMap = new ConcurrentHashMap();
     }
 }
