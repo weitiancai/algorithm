@@ -19,6 +19,7 @@ public class Uniterruptible {
         Thread thread2 = new Thread(() -> {
             System.out.println("t2 enter");
             synchronized (o1) {
+
                 try {
                     System.out.println("start lock t2");
                     Thread.sleep(1000);
