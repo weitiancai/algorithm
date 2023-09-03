@@ -2,9 +2,23 @@ import org.junit.Test;
 
 import javax.swing.tree.TreeNode;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
 import java.util.stream.Stream;
 
 public class testAlgorithm {
+    @Test
+    public void testInterrupt() throws Exception {
+        ThreadInteruptDemo a = new ThreadInteruptDemo();
+        a.exeInterupt();
+    }
+
+    @Test
+    public void testInterruptSync() throws Exception {
+        ThreadInteruptDemo a = new ThreadInteruptDemo();
+        a.exeInteruptSyn();
+    }
+
     @Test
     public void testArray() {
         ListNode head = new ListNode(1);
@@ -1073,5 +1087,36 @@ public class testAlgorithm {
             int rightHeight = maxDepth(root.right);
             return Math.max(leftHeight, rightHeight) + 1;
         }
+    }
+
+    @Test
+    public void testHashMap(){
+        Map<Integer,Integer> map = new HashMap<Integer,Integer>(){{put(1,1);
+            put(2, 2);}};
+//        for (Integer key : map.keySet()) {
+//            if (key == 1) {
+//               map.remove(1);
+//            }
+//        }
+        // 调用 nextNode
+        Iterator var2 = map.keySet().iterator();
+
+        //          每次迭代都要校验一次 modCount 和 expectedModCount
+        while(var2.hasNext()) {
+            Integer key = (Integer)var2.next();
+            if (key == 1) {
+                map.remove(1);
+//                var2.remove();
+            }
+        }
+
+//        final HashMap.Node<K,V> nextNode() {
+//            HashMap.Node<K,V>[] t;
+//            HashMap.Node<K,V> e = next;
+//            if (modCount != expectedModCount)
+//                throw new ConcurrentModificationException();
+
+
+        ConcurrentHashMap concurrentHashMap = new ConcurrentHashMap();
     }
 }
