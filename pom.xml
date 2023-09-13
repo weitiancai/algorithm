@@ -13,6 +13,9 @@
         <maven.compiler.target>8</maven.compiler.target>
         <spring.version>4.2.5.RELEASE</spring.version>
         <junit.version>4.12</junit.version>
+        <logback-classic.version>1.2.6</logback-classic.version>
+        <slf4j-api.version>1.7.32</slf4j-api.version>
+        <guava.version>30.1-jre</guava.version>
     </properties>
     <dependencies>
 
@@ -34,6 +37,26 @@
             <version>${junit.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+
+        <!-- SLF4J API -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j-api.version}</version>
+        </dependency>
+
+        <!-- SLF4J 日志实现 -->
+        <!-- 这里以 Logback 作为日志实现的示例，你也可以选择其他实现，如 log4j -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback-classic.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
