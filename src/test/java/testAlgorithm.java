@@ -4,6 +4,8 @@ import org.junit.Test;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class testAlgorithm {
     @Test
@@ -1287,7 +1289,6 @@ public class testAlgorithm {
         System.out.println(n);
 
         ArrayList<Integer> c ;
-        c.add(2,1);
         LinkedList<Integer> a;
     }
 
