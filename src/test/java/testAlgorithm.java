@@ -1292,4 +1292,66 @@ public class testAlgorithm {
         LinkedList<Integer> a;
     }
 
+
+    public boolean isPalindrome(String s) {
+        StringBuffer sgood = new StringBuffer();
+        int length = s.length();
+        for (int i = 0; i < length; i++) {
+            char ch = s.charAt(i);
+            if (Character.isLetterOrDigit(ch)) {
+                sgood.append(Character.toLowerCase(ch));
+            }
+        }
+        StringBuffer sgood_rev = new StringBuffer(sgood).reverse();
+        return sgood.toString().equals(sgood_rev.toString());
+    }
+
+
+    @Test
+    public void finallyException(){
+        try {
+            int a = 1 / 0;
+        } catch (Exception e) {
+
+        }finally {
+            try {
+                int[] b = new int[1];
+                System.out.println(b[2]);
+            } catch (Exception er) {
+                er.printStackTrace();
+            }
+        }
+    }
+
+    @Test
+
+    public void testToNumber(){
+        System.out.println(titleToNumber("AB"));
+        System.out.println(titleToNumberReverse("AB"));
+    }
+    // 正向来算的
+    public int titleToNumber(String columnTitle) {
+        char[] chars = columnTitle.toCharArray();
+        int sum = 0;
+        int jinzhi = 1;
+        for (int i = chars.length-1; i >=0 ; i--) {
+            int x = getX(chars[i]);
+            sum += x * jinzhi;
+            jinzhi *= 26;
+        }
+        return sum;
+    }
+
+    private static int getX(char chars) {
+        return chars - 'A' + 1;
+    }
+    // 逆向来算
+    public int titleToNumberReverse(String columnTitle) {
+        char[] chars = columnTitle.toCharArray();
+        int sum = 0;
+        for (int i = 0; i <chars.length ; i++) {
+            sum = sum * 26 + getX(chars[i]);
+        }
+        return sum;
+    }
 }

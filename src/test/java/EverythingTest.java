@@ -1,3 +1,4 @@
+import Utils.MyStringUtils;
 import org.junit.Test;
 
 public class EverythingTest {
@@ -23,5 +24,18 @@ public class EverythingTest {
                 System.out.println("Exception throw again");
             }
         }
+    }
+
+    @Test
+    public void testNcpu(){
+        System.out.println(Runtime.getRuntime().availableProcessors());
+    }
+
+    @Test
+    public void StringEqualsTest(){
+        boolean equals = MyStringUtils.equals(null, null);
+        boolean equals2 = MyStringUtils.equals("", null);
+        boolean equals3 = MyStringUtils.equals("", "");
+        System.out.println(equals + " "  + equals2 + " " + equals3);
     }
 }

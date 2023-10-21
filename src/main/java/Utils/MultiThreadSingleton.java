@@ -1,5 +1,7 @@
 package Utils;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 public class MultiThreadSingleton {
 
 //    饿汉式单例模式 :  在类加载时就创建了实例，因此不存在线程安全问题。但是它的缺点是无论是否使用该实例，都会提前进行创建，可能会造成资源浪费。
@@ -37,6 +39,7 @@ public class MultiThreadSingleton {
             }
             return instance;
         }
+
 
     }
 
