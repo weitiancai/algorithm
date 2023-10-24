@@ -1354,4 +1354,111 @@ public class testAlgorithm {
         }
         return sum;
     }
+    @Test
+    public void testReverseBits(){
+//        System.out.println(reverseBits(-3));
+//        System.out.println(reverseBits(43261596));
+        System.out.println( minMaxGame(new int[]{1, 3, 5, 2, 4, 8, 2, 2}));
+    }
+
+    // you need treat n as an unsigned value
+    public int reverseBits(int n) {
+        int sum = 0;
+        for (int i = 0; i < 32; i++) {
+            int bit = n & 1;
+            sum = sum * 2 + bit;
+            n >>>= 1;
+        }
+        return sum;
+    }
+
+
+    public int minMaxGame(int[] nums) {
+        int length = nums.length;
+        if(length == 1){
+            return nums[0];
+        }
+        int newLength;
+        if((length & 1) == 1){
+            newLength = length/2 + 1;
+        }else{
+            newLength = length/2;
+        }
+        int[] newNums = new int[newLength];
+        for (int i = 0; i < length / 2; i++) {
+            if((i&1) == 0){
+                newNums[i] = Math.min(nums[i*2],nums[i*2+1]);
+            }else{
+                newNums[i] = Math.max(nums[i*2],nums[i*2+1]);
+            }
+        }
+        if ((newLength & 1) == 1 && newLength !=1) {
+            newNums[length/2] = nums[length-1];
+        }
+        return minMaxGame(newNums);
+    }
+
+    public List<String> findWords(char[][] board, String[] words) {
+        Set<String> result = new HashSet<>();
+        for (String word : words) {
+            for (int i = 0; i < board.length; i++) {
+                for (int j = 0; j < board[0].length; j++) {
+                    if(board[i][j] == word.charAt(0)){
+                        if (backtrack(board, i, j, 0, word.toCharArray())) {
+                            result.add(word);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return new ArrayList<>(result);
+    }
+
+    private boolean backtrack(char[][] board, int i ,int j, int wordIndex,char[] wordChars){
+        if (wordIndex == wordChars.length) {
+            return true;
+        }
+        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || board[i][j] != wordChars[wordIndex]) {
+            return false;
+        }
+        board[i][j] = '#';
+
+        boolean result = backtrack(board, i - 1, j, wordIndex + 1, wordChars) ||
+                backtrack(board, i, j + 1, wordIndex + 1, wordChars)||
+                backtrack(board, i+1, j, wordIndex + 1, wordChars)||
+                backtrack(board, i, j - 1, wordIndex + 1, wordChars);
+
+        board[i][j] = wordChars[wordIndex];
+        return result;
+    }
+
+
+    public int waysToStep(int n) {
+        long[] a= new long[n+3];
+        a[0] = 1;
+        a[1] = 1;
+        a[2] = 2;
+        for (int i = 3; i <= n; i++) {
+            a[i] = (a[i-3] + a[i-2] + a[i-1]) % 1000000007;
+        }
+        return (int)a[n];
+    }
+
+    public long countQuadruplets(int[] nums) {
+        int n = nums.length;
+        int[] v = new int[n];
+        long as =0;
+        for (int i = 1; i < n; i++) {
+            int c = 0;
+            for (int j = 0; j < i; j++) {
+                if (ns[i] > ns[j]) {
+                    as += v[j];
+                    c++;
+                } else {
+                    v[j]+=c;
+                }
+            }
+        }
+    }
 }
