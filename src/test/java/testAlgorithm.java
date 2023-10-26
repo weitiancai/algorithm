@@ -6,6 +6,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.stream.Collectors;
 
 public class testAlgorithm {
     @Test
@@ -1452,7 +1453,7 @@ public class testAlgorithm {
         for (int i = 1; i < n; i++) {
             int c = 0;
             for (int j = 0; j < i; j++) {
-                if (ns[i] > ns[j]) {
+                if (nums[i] > nums[j]) {
                     as += v[j];
                     c++;
                 } else {
@@ -1460,5 +1461,55 @@ public class testAlgorithm {
                 }
             }
         }
+        return as;
+    }
+
+    @Test
+    public void testGetrow(){
+        System.out.println(getRow2(5));
+    }
+    public List<Integer> getRow(int rowIndex) {
+        if(rowIndex==0) return new ArrayList<Integer>(){{add(1);}};
+        ArrayList<Integer> ans = new ArrayList<>();
+        for (int i = 0; i <= rowIndex/2; i++) {
+            int begin = 1;
+            int row = rowIndex - i;
+            while(row-- > 0){
+                begin+=i;
+            }
+            ans.add(begin);
+        }
+        if ((rowIndex & 1) == 1) {
+            List<Integer> reversed = new ArrayList<>(ans);
+            Collections.reverse(reversed);
+            ans.addAll(reversed);
+        }else{
+            List<Integer> reversed = ans.subList(0, ans.size() - 1);
+            Collections.reverse(reversed);
+            ans.addAll(reversed);
+        }
+        return ans;
+    }
+    public List<Integer> getRow2(int rowIndex) {
+        int[]dp = new int[rowIndex];
+        dp[0] = 1;
+        for (int i = 0; i < rowIndex; i++) {
+            for (int j = i; j >0 ; j--) {
+                dp[j] = dp[j - 1] + dp[j];
+            }
+        }
+        return Arrays.stream(dp).boxed().collect(Collectors.toList());
+    }
+
+    public List<Integer> getRow3(int rowIndex) {
+        List<Integer> row = new ArrayList<>();
+        row.add(1);
+        for (int i = 1; i <= rowIndex; i++) {
+            row.add(0);
+            for (int j = i; j > 0; j--) {
+                row.set(j, row.get(j) + row.get(j-1));
+            }
+        }
+        return row;
     }
 }
