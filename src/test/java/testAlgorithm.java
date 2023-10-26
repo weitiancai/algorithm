@@ -1468,7 +1468,7 @@ public class testAlgorithm {
     public void testGetrow(){
         System.out.println(generate(5));
     }
-//自己做的实现
+//自己做的实现  记得i 的开始 和下标处理
     public List<List<Integer>> generate(int numRows) {
         List<List<Integer>> ans = new ArrayList<>();
         for (int i = 1; i <= numRows; i++) {
@@ -1529,7 +1529,7 @@ public class testAlgorithm {
         }
         return row;
     }
-
+    // 我自己的实现， 如果j 从前往后遍历 会覆盖上层结果，所以，只能最后加0 往前遍历
     public List<Integer> getRow4(int rowIndex) {
         List<Integer> ans= new ArrayList<>();
         ans.add(1);
