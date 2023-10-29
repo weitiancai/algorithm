@@ -1,4 +1,5 @@
 import Utils.TreeUtils;
+import leetCode.NTreeNode;
 import leetCode.TreeNode;
 import org.checkerframework.checker.units.qual.A;
 import org.junit.Test;
@@ -1673,5 +1674,136 @@ public class testAlgorithm {
             ans.add(row);
         }
         return ans;
+    }
+
+    public List<List<Integer>> levelOrderJc(TreeNode root) {
+        List<List<Integer>> ans = new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        if (root != null) {
+            queue.offer(root);
+        }
+//        List<Integer> row = new ArrayList<>();
+        int cnt = 0;
+        while (!queue.isEmpty()) {
+            int n = queue.size();
+            List<Integer> row = new ArrayList<>();
+//            TreeNode poll = queue.poll();
+//            row.add(poll.val);
+            // 其实是一个缓存的概念
+            for (int i = 0; i < n; i++) {
+                TreeNode poll = queue.poll();
+                row.add(poll.val);
+                if (poll.left != null) {
+                    queue.offer(poll.left);
+                }
+                if (poll.right != null) {
+                    queue.offer(poll.right);
+                }
+            }
+            if((cnt++ & 1) == 1) Collections.reverse(row);
+            ans.add(row);
+        }
+        return ans;
+    }
+
+
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List<List<Integer>> ans = new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        if (root != null) {
+            queue.offer(root);
+        }
+        while (!queue.isEmpty()) {
+            int n = queue.size();
+            List<Integer> row = new ArrayList<>();
+            for (int i = 0; i <n; i++) {
+                TreeNode poll = queue.poll();
+                row.add(poll.val);
+                if (poll.left != null) {
+                    queue.offer(poll.left);
+                }
+                if (poll.right != null) {
+                    queue.offer(poll.right);
+                }
+            }
+            ans.add(row);
+        }
+        Collections.reverse(ans);
+        return ans;
+    }
+
+
+    public List<List<Integer>> levelOrder(NTreeNode root) {
+        List<List<Integer>> ans = new ArrayList<>();
+        Queue<NTreeNode> queue = new LinkedList<>();
+        if (root != null) {
+            queue.offer(root);
+        }
+        while (!queue.isEmpty()) {
+            int n = queue.size();
+            List<Integer> row = new ArrayList<>();
+            for (int i = 0; i < n; i++) {
+                NTreeNode poll = queue.poll();
+                row.add(poll.val);
+                for (int j = 0; j < poll.children.size(); j++) {
+                    queue.offer(poll.children.get(j));
+                }
+            }
+            ans.add(row);
+        }
+        return ans;
+    }
+
+    @Test
+    public void convertToTitle(){
+//        System.out.println(convertToTitle(701));
+        System.out.println(majorityElement(new int[]{1}));
+//        System.out.println(majorityElement(new int[]{3,3,2,2,2}));
+    }
+
+    public String convertToTitle(int columnNumber) {
+        StringBuilder sb = new StringBuilder();
+        while (columnNumber > 0) {
+            columnNumber--; // 这一行是最重要的，因为从1 开始的，所以进制不对的
+            sb.insert(0, (char) (columnNumber % 26 + 'A'));
+            columnNumber /= 26;
+
+        }
+        return sb.toString();
+    }
+// 重要的
+    public String convertToTitleReal(int cn) {
+        StringBuilder sb = new StringBuilder();
+        while (cn > 0) {
+            cn--;
+            sb.append((char)(cn%26+'A'));
+            cn/=26;
+        }
+        sb.reverse();
+        return sb.toString();
+    }
+
+    public int majorityElement(int[] nums) {
+        int min = 0;
+        int max= nums.length -1;
+        if (max == 0) {
+            return nums[0];
+        }
+        int majority = (max - min) / 2 + 1;
+
+        Random rand = new Random();
+        while (true) {
+            int candidateIndex = rand.nextInt(nums.length - 1);
+            int candidate = nums[candidateIndex];
+            int cnt=0;
+            for (int i = 0; i < nums.length; i++) {
+                if (nums[i] == candidate) {
+                    cnt++;
+                }
+            }
+            if (cnt >= majority) {
+                return candidate;
+            }
+        }
     }
 }
