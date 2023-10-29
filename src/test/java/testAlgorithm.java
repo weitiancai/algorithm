@@ -1,5 +1,6 @@
 import Utils.TreeUtils;
 import leetCode.TreeNode;
+import org.checkerframework.checker.units.qual.A;
 import org.junit.Test;
 
 import java.util.*;
@@ -1539,6 +1540,137 @@ public class testAlgorithm {
             for (int j = i; j > 0; j--) {
                 ans.set(j,ans.get(j)+ans.get(j-1));
             }
+        }
+        return ans;
+    }
+
+    @Test
+    public void testLevelOrder(){
+        TreeNode treeNode = TreeUtils.intArrayToTreeNode(new Integer[]{1, 2, 2, 3, null, null, 3, 4, 5, null, 677, 3});
+//        List<Integer> integers = levelOrder(treeNode);
+//        integers.stream().forEach(System.out::println);
+//        beforeOrder(treeNode);
+        List<List<Integer>> lists = levelOrderWithLevel(treeNode);
+//        List<List<Integer>> lists = levelOrderReal(treeNode);
+        for (List<Integer> list : lists) {
+            list.forEach(System.out::print);
+            System.out.println();
+        }
+    }
+
+    // 层序遍历
+    public List<Integer> levelOrder(TreeNode root) {
+        if(root == null)return null;
+        Queue<TreeNode> queue = new LinkedList<>();
+        List<Integer> ans = new ArrayList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            TreeNode poll = queue.poll();
+            int val = poll.getVal();
+            ans.add(val);
+            if (poll.getLeft() != null) {
+                queue.add(poll.getLeft());
+            }if (poll.getRight() != null) {
+                queue.add(poll.getRight());
+            }
+        }
+        return ans;
+    }
+
+
+    public void beforeOrder(TreeNode root) {
+        if (root == null) return;
+//        System.out.println(root.getVal());  //前序遍历
+        if (root.left != null) {
+            beforeOrder(root.left);
+        }
+//        System.out.println(root.getVal());  //中序遍历
+
+        if (root.right != null) {
+            beforeOrder(root.right);
+        }
+
+        System.out.println(root.getVal());  //后序遍历
+    }
+
+    // 带层号
+    class TreeNodeLevel{
+        TreeNode treeNode;
+        int level;
+
+        public TreeNodeLevel(TreeNode root, int cnt) {
+            this.treeNode = root;
+            this.level = cnt;
+        }
+
+        public TreeNode getTreeNode() {
+            return treeNode;
+        }
+
+        public int getLevel() {
+            return level;
+        }
+    }
+
+    public List<List<Integer>> levelOrderWithLevel(TreeNode root) {
+        if(root == null)return null;
+        List<TreeNodeLevel> outputList = new ArrayList<>();
+        Queue<TreeNodeLevel> queue = new LinkedList<>();
+        int cnt = 0;
+        queue.offer(new TreeNodeLevel(root, cnt));
+        while(!queue.isEmpty()){
+            int n = queue.size();
+            cnt++;
+            for (int i = 0; i < n; i++) {
+                TreeNodeLevel treeNode = queue.poll();
+                TreeNode node = treeNode.getTreeNode();
+                outputList.add(treeNode);
+                if (node.left != null) {
+                    queue.offer(new TreeNodeLevel(node.left,cnt));
+                }
+                if (node.right != null) {
+                    queue.offer(new TreeNodeLevel(node.right,cnt));
+                }
+            }
+        }
+        List<TreeNodeLevel> subList = Collections.singletonList(outputList.get(0));
+        List<List<Integer>> ans = new ArrayList<>();
+        for (int i = 1; i < outputList.size(); i++) {
+            if (!Objects.equals(outputList.get(i).getLevel(), outputList.get(i - 1).getLevel())) {
+                ans.add(subList.stream().map(TreeNodeLevel::getTreeNode).map(TreeNode::getVal).collect(Collectors.toList()));
+                subList = new ArrayList<>();
+            }
+            subList.add(outputList.get(i));
+        }
+        ans.add(subList.stream().map(TreeNodeLevel::getTreeNode).map(TreeNode::getVal).collect(Collectors.toList()));
+        return ans;
+    }
+
+
+    public List<List<Integer>> levelOrderReal(TreeNode root) {
+        List<List<Integer>> ans = new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        if (root != null) {
+            queue.offer(root);
+        }
+//        List<Integer> row = new ArrayList<>();
+        while (!queue.isEmpty()) {
+            int n = queue.size();
+            List<Integer> row = new ArrayList<>();
+//            TreeNode poll = queue.poll();
+//            row.add(poll.val);
+            // 其实是一个缓存的概念
+            for (int i = 0; i < n; i++) {
+                TreeNode poll = queue.poll();
+                row.add(poll.val);
+                if (poll.left != null) {
+                    queue.offer(poll.left);
+                }
+                if (poll.right != null) {
+                    queue.offer(poll.right);
+                }
+            }
+            ans.add(row);
         }
         return ans;
     }
