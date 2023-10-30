@@ -1845,4 +1845,102 @@ public class testAlgorithm {
             }
         }
     }
+
+    @Test
+    public void testQuickSort(){
+        int[] ints = {3, 2, 1, 5, 6, 4};
+//        quickSort(ints,0,5);
+//        System.out.println(Arrays.toString(ints));
+
+        System.out.println(findKthLargest(ints, 3));
+
+//        System.out.println(majorityElement(new int[]{3,3,2,2,2}));
+    }
+
+    public void quickSort(int[] a, int left, int right) {
+        if (left >= right) {
+            return;
+        }
+        int i = left, j = right;
+        int pivot = a[right];
+
+        while (i < j) {
+            while (i < j && a[i] < pivot) {
+                i++;
+            }
+            if (i < j) a[j--] = a[i];
+            while (i < j && a[j] > pivot) {
+                j--;
+            }
+            if (i < j) a[i++] = a[j];
+        }
+        a[i] = pivot;
+        quickSort(a, left, i - 1);
+        quickSort(a, i + 1, right);
+    }
+
+
+
+    public int findKthLargest(int[] nums, int k) {
+        return quickSort3(nums, 0, nums.length - 1, k);
+    }
+
+
+    public int quickSort3(int[] a, int left, int right, int k) {
+        if (left >= right) {
+            return a[k-1];
+        }
+        int i = left, j = right;
+        int pivot = a[right];
+
+        while (i < j) {
+            while (i < j && a[i] > pivot) {
+                i++;
+            }
+            if (i < j) a[j--] = a[i];
+            while (i < j && a[j] < pivot) {
+                j--;
+            }
+            if (i < j) a[i++] = a[j];
+        }
+        a[i] = pivot;
+        if (k - 1 <= i - 1 && k - 1 >= left) {
+            return quickSort3(a, left, i - 1, k);
+        } else {
+            return quickSort3(a, i + 1, right, k);
+        }
+    }
+
+
+    public int findKthLargest2(int[] nums, int k) {
+        return quickSort4(nums, 0, nums.length - 1, k);
+    }
+
+
+    public int quickSort4(int[] a, int left, int right, int k) {
+        if (left == right) {
+            return a[k-1];
+        }
+        int i = left, j = right;
+        int pivot = a[right];
+
+        while (i < j) {
+            while (i < j && a[i] > pivot) {
+                i++;
+            }
+            if (i < j) a[j--] = a[i];
+            while (i < j && a[j] < pivot) {
+                j--;
+            }
+            if (i < j) a[i++] = a[j];
+        }
+        a[i] = pivot;
+        if (k - 1 <= i - 1 && k - 1 >= left) {
+            return quickSort4(a, left, i - 1, k);
+        } else if (k - 1 >= i + 1 && k - 1 <= right) {
+            return quickSort4(a, i + 1, right, k);
+        } else {
+            return pivot;
+        }
+    }
 }
