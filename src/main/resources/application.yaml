@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      master:
+        name: masterDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://10.200.242.87:8066/yxh_user?zeroDateTimeBehavior=convertToNull
+        username: root
+        password: root
+      slaver:
+        name: slaverDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/yxh_user?zeroDateTimeBehavior=convertToNull
+        username: root
+        password: root

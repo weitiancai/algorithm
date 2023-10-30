@@ -1806,4 +1806,43 @@ public class testAlgorithm {
             }
         }
     }
+
+    public ListNode reverseBetween2(ListNode head, int left, int right) {
+        if(head == null)return null;
+
+        ListNode dummyNode = new ListNode();
+        dummyNode.next = head;
+        ListNode pre = dummyNode;
+        int cnt = left;
+        while(cnt-- >0) {
+            pre = pre.next;
+            head = head.next;
+        }
+        // pre -> head .... right
+
+        ListNode follow = head.next;
+        for (int i = 0; i < right - left + 1; i++) {
+            head.next = follow.next;
+            follow.next = pre.next;
+            pre.next = follow;
+            follow = head.next;
+        }
+
+        return dummyNode.next;
+    }
+
+    public boolean hasCycle(ListNode head) {
+        if(head == null || head.next == null) return false;
+        ListNode follow = head.next;
+        while (true) {
+            follow = follow.next.next;
+            head = head.next;
+            if (follow == head) {
+                return true;
+            }
+            if (follow.next == null || head.next == null) {
+                return false;
+            }
+        }
+    }
 }

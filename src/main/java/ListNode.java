@@ -6,6 +6,9 @@ import lombok.Getter;
 public class ListNode {
     public ListNode next;
     int val;
+
+    ListNode() {}
+
     public ListNode(int val) {
         this.val =val;
     }
