@@ -1984,6 +1984,42 @@ public class testAlgorithm {
             return pivot;
         }
     }
+    //三数之和
+    @Test
+    public void threeSum(){
+        List<List<Integer>> lists = threeSum(new int[]{1, -1, 2, -2, 3});
+        for (List<Integer> list : lists) {
+            for (Integer integer : list) {
+                System.out.print(integer +" ");
+            }
+            System.out.println();
+        }
+    }
+    // 答案中不可以包含重复的三元组。
+    public List<List<Integer>> threeSum(int[] arr) {
+        Set<List<Integer>> listSet = new HashSet<>();
+        int n = arr.length;
+        // 以中间数据为桥梁
+        for (int i = 1; i < n-1; i++) {
+            Map<Integer, Integer> map = new HashMap<>();
+            int left = i-1;
+            while (left >= 0) {
+                map.put(-(arr[left] + arr[i]), left);
+                left--;
+            }
+            int right = i+1;
+            while (right < n) {
+                if(map.containsKey(arr[right])){
+                    List<Integer> oneResultList = Arrays.asList(arr[map.get(arr[right])], arr[i], arr[right]);
+                    oneResultList.sort(Integer::compareTo);
+                    listSet.add(oneResultList);
+                }
+                right++;
+            }
+
+        }
+        return new ArrayList<>(listSet);
+    }
 
     public int findFinalValue(int[] nums, int original) {
         int n =  nums.length;
