@@ -11,7 +11,10 @@ public class HeapSort {
     public static void main(String[] args) {
         int[] arr = new int[]{1, 3, 5,2, 0,10,6};
         System.out.println(Arrays.toString(arr));
-        arr = heapSort(arr, arr.length);
+        //arr = heapSort(arr, arr.length);
+        //System.out.println(Arrays.toString(arr));
+
+        heapSort2(arr);
         System.out.println(Arrays.toString(arr));
     }
 
@@ -51,5 +54,35 @@ public class HeapSort {
         }
         arr[parent] = temp;
         return arr;
+    }
+    // 这个是 hello算法的版本
+    static void  heapSort2(int[] arr) {
+        for (int i = arr.length / 2 - 1; i >= 0; i--) {
+            siftDown(arr,i,arr.length);
+        }
+        for (int i = arr.length-1; i >0 ; i--) {
+            int tmp = arr[i];
+            arr[i] = arr[0];
+            arr[0] = tmp;
+            siftDown(arr, 0, i);
+        }
+    }
+
+    static void siftDown(int[] arr, int i, int n) {
+        while (true) {
+            int l = 2*i+1;
+            int r = 2*i+2;
+            int ma = i;
+            if(l<n && arr[l]> arr[ma])
+                ma = l;
+            if(r<n && arr[r]> arr[ma])
+                ma = r;
+            if(ma==i)
+                break;
+            int tmp = arr[ma];
+            arr[ma] = arr[i];
+            arr[i] = tmp;
+            i = ma;
+        }
     }
 }
