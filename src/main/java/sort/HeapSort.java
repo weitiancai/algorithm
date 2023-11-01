@@ -11,7 +11,7 @@ public class HeapSort {
     public static void main(String[] args) {
         int[] arr = new int[]{1, 3, 5,2, 0,10,6};
         System.out.println(Arrays.toString(arr));
-        arr = heapSort(arr, arr.length);
+        arr = myHeapSort(arr);
         System.out.println(Arrays.toString(arr));
     }
 
@@ -52,4 +52,41 @@ public class HeapSort {
         arr[parent] = temp;
         return arr;
     }
+
+
+    public static int[] myHeapSort(int[] arr) {
+        int n = arr.length;
+        for (int i = n/2-1; i>=0; i--) {
+            heapify(arr, i, n);
+        }
+        for (int i = n-1; i > 0; i--) {
+            int tmp = arr[0];
+            arr[0] = arr[i];
+            arr[i] = tmp;
+            heapify(arr, 0, i);
+        }
+        return arr;
+    }
+
+    public static void heapify(int[] arr, int i, int n) {
+        int l = i * 2 + 1;
+        int r = i * 2 + 2;
+        int p = i;
+        while (true) {
+            if(l<n && arr[l] > arr[p]){
+                p = l;
+            }
+            if (r < n && arr[r] > arr[p]) {
+                p = r;
+            }
+            if(p == i)
+                break;
+            int tmp = arr[i];
+            arr[i] = arr[p];
+            arr[p] = tmp;
+            p = i;
+        }
+    }
+
+
 }
