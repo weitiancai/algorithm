@@ -25,6 +25,47 @@ public class testAlgorithm {
         deleteDuplicates(head);
         showListNode(head);
     }
+
+    @Test
+    public void testRoman(){
+        System.out.println(romanToInt("MCMXCIV"));
+    }
+
+    // 我做的，罗马数字转整数 ，其实就是 加加减减
+    public int romanToInt(String s) {
+        Map<Character, Integer> orderMap = new HashMap<Character, Integer>(){{
+                put('I',1);
+        put('V',2);
+        put('X',3);
+        put('L',4);
+        put('C',5);
+        put('D',6);
+        put('M',7);
+        }};
+        Map<Character, Integer> valueMap = new HashMap<Character, Integer>(){{
+            put('I',1);
+            put('V',5);
+            put('X',10);
+            put('L',50);
+            put('C',100);
+            put('D',500);
+            put('M',1000);
+        }};
+        char[] arr = s.toCharArray();
+        int ans = 0;
+        for (int i = 0; i < arr.length; i++) {
+            // 一判断 后面两位是否是 大于的数  是的话，就相减这个数就好了
+            if(i+1 < arr.length && orderMap.get(arr[i]) < orderMap.get(arr[i+1])){
+                ans -= valueMap.get(arr[i]);
+            }
+            if(i+2 < arr.length && orderMap.get(arr[i]) < orderMap.get(arr[i+2])){
+                ans -= valueMap.get(arr[i]);
+            }else{
+                ans += valueMap.get(arr[i]);
+            }
+        }
+        return ans;
+    }
     //83
     public ListNode deleteDuplicatesFail(ListNode head) {
         ListNode pre = new ListNode(-1);
