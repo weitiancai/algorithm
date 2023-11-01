@@ -88,5 +88,38 @@ public class HeapSort {
         }
     }
 
-
+    public int maximumPopulation(int[][] logs) {
+        int n = logs.length;
+        if(n==0) return 0;
+        int max = 0;
+        int[] range = new int[101];
+        for (int i = 0; i < n; i++) {
+            for (int j = logs[i][0] -1950; j < logs[i][1]-1950; j++) {
+                range[j]++;
+                max = Math.max(max, range[j]);
+            }
+        }
+        for (int i = 0; i < range.length; i++) {
+            if (range[i] == max) {
+                return i+1960;
+            }
+        }
+        return logs[0][0];
+    }
+    //最多人口年份最早
+    public int maximumPopulationReal(int[][] logs) {
+        int res = 0,cnt= 0;
+        for (int i = 1950; i <= 2050; i++) {
+            int s =0;
+            for (int[] log : logs) {
+                if(i>=log[0] && i<log[1])
+                    s++;
+            }
+            if(s>cnt){
+                res = i;
+                cnt = s;
+            }
+        }
+        return res;
+    }
 }
