@@ -23,7 +23,6 @@ public class WindowLimiter {
                             return new AtomicLong(0);
                         }
                     });
-
     private ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
     //限流阈值
     private long limit = 15;
