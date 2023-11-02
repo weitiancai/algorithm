@@ -1984,4 +1984,60 @@ public class testAlgorithm {
             return pivot;
         }
     }
+
+    public int findFinalValue(int[] nums, int original) {
+        int n =  nums.length;
+        if(n == 0) return 0;
+        int ans;
+        Map<Integer, Boolean> booleanMap = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            if (nums[i] % original == 0) {
+                booleanMap.put(nums[i] / original, true);
+            }
+        }
+        for (int i = 1; ; i = i*2) {
+            if(!booleanMap.containsKey(i)){
+                return i*original;
+            }
+        }
+    }
+
+    @Test
+    public void hasPathTest(){
+        Integer[] num = new Integer[]{1,2,3};
+        TreeNode root = TreeUtils.intArrayToTreeNode(num);
+        System.out.println(hasPathSumReal(root, 5));
+//        System.out.println(hasPathSumFailure(root, 5));
+    }
+
+    public boolean hasPathSumFailure(TreeNode root, int targetSum) {
+        if (root == null) {
+            return false;
+        }
+        return getPathSum(root, targetSum);
+    }
+
+    public boolean getPathSum(TreeNode root, int remain) {
+//        没有判断 root 是否为叶子节点。比如 root 为空的话，题目的意思是要返回 False 的，而上面的代码会返回 sum == 0。又比如，对于测试用例 树为 [1,2], sum = 0 时，上面的结果也会返回为 True，因为对于上述代码，只要左右任意一个孩子的为空时 sum == 0 就返回 True。
+        // 这里少了一步 root == null 的判断
+        if (root.left == null && root.right == null ) {
+            return remain == root.val;
+        }
+        return getPathSum(root.left, remain - root.val) ||
+                getPathSum(root.right, remain - root.val);
+    }
+
+    public boolean hasPathSumReal(TreeNode root, int targetSum) {
+        // 1
+        if (root == null) {
+            return false;
+        }
+        // 2
+        if (root.left == null && root.right == null ) {
+            return targetSum == root.val;
+        }
+        // 1，,2 缺一不可
+        return hasPathSumReal(root.left, targetSum - root.val) ||
+                hasPathSumReal(root.right, targetSum - root.val);
+    }
 }
