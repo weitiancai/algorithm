@@ -2040,4 +2040,27 @@ public class testAlgorithm {
         return hasPathSumReal(root.left, targetSum - root.val) ||
                 hasPathSumReal(root.right, targetSum - root.val);
     }
+
+    @Test
+    public void testisAnagram(){
+        System.out.println(isAnagram("car", "rat"));
+
+    }
+    public boolean isAnagram(String s, String t) {
+        char[] charArray1 = s.toCharArray();
+        char[] charArray2 = t.toCharArray();
+        if(charArray1.length != charArray2.length)
+            return false;
+        int[] charCnt1 = new int[26] ;
+
+        for (int i = 0; i < charArray1.length; i++) {
+            charCnt1[charArray1[i]-'a']++;
+            charCnt1[charArray2[i]-'a']--;
+        }
+        for (int i = 0; i < 26; i++) {
+            if(charCnt1[i]!=0)
+                return false;
+        }
+        return true;
+    }
 }
