@@ -2063,4 +2063,28 @@ public class testAlgorithm {
         }
         return true;
     }
+
+    @Test
+    public void testIndexOf(){
+        System.out.println(strStr("a", "a"));
+    }
+
+    public int strStr(String haystack, String needle) {
+        char[] chars1 = haystack.toCharArray();
+        char[] chars2 = needle.toCharArray();
+        int length = chars1.length;
+        int length2 = chars2.length;
+        if (length2 > length) {
+            return -1;
+        }
+        for (int i = 0; i <= length-length2; i++) {
+                int j = 0;
+                int k = i;
+                while(j<length2 && i+j < length && chars1[k]==chars2[j]) {
+                    j++;k++;
+                }
+                if(j==length2) return i;
+        }
+        return -1;
+    }
 }
