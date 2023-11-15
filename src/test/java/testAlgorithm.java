@@ -2087,4 +2087,19 @@ public class testAlgorithm {
         }
         return -1;
     }
+
+    // 二叉树是否平衡
+    public boolean isBalanced(TreeNode root) {
+        if(root == null) return true;
+        return Math.abs(getDeepth(root.left) - getDeepth(root.right))<=1 && isBalanced(root.left) && isBalanced(root.right);
+    }
+
+    private int getDeepth(TreeNode root) {
+        if(root == null) return 0;
+        else{
+            return Math.max(getDeepth(root.left), getDeepth(root.right))+1;
+        }
+    }
+
+
 }
