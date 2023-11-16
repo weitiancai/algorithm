@@ -2066,7 +2066,8 @@ public class testAlgorithm {
 
     @Test
     public void testIndexOf(){
-        System.out.println(strStr("a", "a"));
+//        System.out.println(strStr("a", "a"));
+        System.out.println(1+ 3/3);
     }
 
     public int strStr(String haystack, String needle) {
@@ -2100,6 +2101,16 @@ public class testAlgorithm {
             return Math.max(getDeepth(root.left), getDeepth(root.right))+1;
         }
     }
-
+    // 链表相交    a+c+b == b+c+a
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode a = headA;
+        ListNode b = headB;
+        if(a==null || b == null) return null;
+        while(a != b){
+            a = a == null?headB : a.next;
+            b = b == null?headA : b.next;
+        }
+        return a;
+    }
 
 }
