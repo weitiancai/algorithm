@@ -2149,4 +2149,39 @@ public class testAlgorithm {
         return a;
     }
 
+
+    @Test
+    public void testHapyy(){
+        System.out.println(isHappy(2));
+    }
+
+    public boolean isHappy(int n) {
+        if(n==1){
+            return true;
+        }else if(n == 2 || n == 4){
+            return false;
+        }
+        List<Integer> list = toEveryNumber(n);
+        Integer n1 = toResultSqr(list);
+        return isHappy(n1);
+    }
+
+    List<Integer> toEveryNumber(int n) {
+        List<Integer> list = new ArrayList<>();
+        while(n>0){
+            list.add(n % 10);
+            n /=10;
+        }
+        return list;
+    }
+
+    Integer toResultSqr(List<Integer> list) {
+        int sum =0;
+        for (int i = 0; i < list.size(); i++) {
+            Integer integer = list.get(i);
+            sum += integer * integer;
+        }
+        return sum;
+    }
+
 }
