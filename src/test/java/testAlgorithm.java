@@ -2184,4 +2184,57 @@ public class testAlgorithm {
         return sum;
     }
 
+    @Test
+    public void testIsomorphic(){
+//        System.out.println(isIsomorphic2("abcdefghijklmnopqrstuvwxyzva","abcdefghijklmnopqrstuvwxyzck"));
+        System.out.println(isIsomorphic2("foo","bar"));
+    }
+
+    public boolean isIsomorphic(String s, String t) {
+        char[] arr1 = s.toCharArray();
+        char[] arr2 = t.toCharArray();
+        if(arr2.length != arr1.length) return false;
+        String string1 = isIsomorphicFunc(arr1).toString();
+        System.out.println(string1);
+        String string2= isIsomorphicFunc(arr2).toString();
+        System.out.println(string2);
+        // abcda
+        // ehije
+//        都转化成12341
+        return string1.equals(string2);
+    }
+
+    private StringBuilder isIsomorphicFunc(char[] arr1) {
+        StringBuilder sb = new StringBuilder();
+        int num= 0;
+        Map<Character,Character> map = new HashMap<>();
+        for (int i = 0; i < arr1.length; i++) {
+            char c = arr1[i];
+            if(map.containsKey(c)){
+               sb.append(map.get(c));
+            }
+            else {
+                map.put(c, (char)num);
+                sb.append(num++);
+            }
+        }
+        return sb;
+    }
+
+    public boolean isIsomorphic2(String s, String t) {
+        char[] arr1 = s.toCharArray();
+        char[] arr2 = t.toCharArray();
+        if(arr2.length != arr1.length) return false;
+        Map<Character, Character> aMap = new HashMap<Character, Character>();
+        Map<Character, Character> bMap = new HashMap<Character, Character>();
+        for (int i = 0; i < arr1.length; i++) {
+            char a = arr1[i],b=arr2[i];
+            if(aMap.containsKey(a) && aMap.get(a) != b || bMap.containsKey(b) && bMap.get(b)!=a){
+                return false;
+            }
+            aMap.put(a, b);
+            bMap.put(b, a);
+        }
+        return true;
+    }
 }
