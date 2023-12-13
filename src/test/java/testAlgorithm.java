@@ -2238,13 +2238,7 @@ public class testAlgorithm {
         return true;
     }
 
-    @Test
-    public void testIntersection(){
-        int[] intersection = intersection(new int[]{12, 3, 33}, new int[]{2, 3, 4, 55});
-        for (int i : intersection) {
-            System.out.println(i);
-        }
-    }
+
 
     public int[] intersection(int[] nums1, int[] nums2) {
         Set<Integer> set2 = toSet(nums2);
@@ -2286,5 +2280,42 @@ public class testAlgorithm {
             a.add(nums1[i]);
         }
         return a;
+    }
+
+
+    public String reverseVowels(String s) {
+        char[] charArray = s.toCharArray();
+        int i = 0, j = charArray.length-1;
+        char temp;
+        while(i<j){
+            while (!isyuanyin(charArray[i]) && i < j) {
+                i++;
+            }
+            temp = charArray[i];
+            while (!isyuanyin(charArray[j]) && i < j) {
+                j--;
+            }
+            charArray[i] =charArray[j];
+            charArray[j] = temp;
+            i++;j--;
+        }
+        return String.valueOf(charArray);
+    }
+    private boolean isyuanyin(char c){
+        return (c == 'a' || c == 'e' || c == 'i' ||
+                c == 'o' || c == 'u'||
+                c == 'A' || c == 'E' || c == 'I' ||
+                c == 'O' || c == 'U');
+    }
+
+
+    @Test
+    public void testIntersection(){
+//        int[] intersection = intersection(new int[]{12, 3, 33}, new int[]{2, 3, 4, 55});
+//        for (int i : intersection) {
+//            System.out.println(i);
+//        }
+
+        System.out.println(reverseVowels("hello"));
     }
 }

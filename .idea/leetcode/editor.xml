@@ -3,6 +3,39 @@
   <component name="LeetcodeEditor">
     <option name="projectConfig">
       <map>
+        <entry key="$PROJECT_DIR$/../../leetCode/tmp_file/leetcode/editor/cn/[175]组合两个表.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/../../leetCode/tmp_file/leetcode/editor/cn/doc/content/[175]组合两个表.md" />
+              <option name="frontendQuestionId" value="leetcode.cn175" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/../../leetCode/tmp_file/leetcode/editor/cn/[175]组合两个表.java" />
+              <option name="titleSlug" value="combine-two-tables" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../leetCode/tmp_file/leetcode/editor/cn/[176]第二高的薪水.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/../../leetCode/tmp_file/leetcode/editor/cn/doc/content/[176]第二高的薪水.md" />
+              <option name="frontendQuestionId" value="leetcode.cn176" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/../../leetCode/tmp_file/leetcode/editor/cn/[176]第二高的薪水.java" />
+              <option name="titleSlug" value="second-highest-salary" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../leetCode/tmp_file/leetcode/editor/cn/[345]反转字符串中的元音字母.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/../../leetCode/tmp_file/leetcode/editor/cn/doc/content/[345]反转字符串中的元音字母.md" />
+              <option name="frontendQuestionId" value="leetcode.cn345" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/../../leetCode/tmp_file/leetcode/editor/cn/[345]反转字符串中的元音字母.java" />
+              <option name="titleSlug" value="reverse-vowels-of-a-string" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="/var/folders/zf/r1_jjds17zqgw45j9f10q5n80000gn/T/leetcode/editor/cn/[136]只出现一次的数字.java">
           <value>
             <LeetcodeEditor>
