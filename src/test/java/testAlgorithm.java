@@ -2237,4 +2237,54 @@ public class testAlgorithm {
         }
         return true;
     }
+
+    @Test
+    public void testIntersection(){
+        int[] intersection = intersection(new int[]{12, 3, 33}, new int[]{2, 3, 4, 55});
+        for (int i : intersection) {
+            System.out.println(i);
+        }
+    }
+
+    public int[] intersection(int[] nums1, int[] nums2) {
+        Set<Integer> set2 = toSet(nums2);
+        Set<Integer> set1 = toSet(nums1);
+        List<Integer> res = new ArrayList<>();
+        set1.forEach(
+                key -> {
+                    if (set2.contains(key)) {
+                        res.add(key);
+                    }
+                }
+        );
+        return res.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    private Set<Integer> toSet(int [] nums1){
+        Set a = new HashSet<Integer>();
+        for (int i = 0; i < nums1.length; i++) {
+            a.add(nums1[i]);
+        }
+        return a;
+    }
+
+
+    public int[] intersection2(int[] nums1, int[] nums2) {
+        Set<Integer> set1 = toSet2(nums1);
+        Set<Integer> res = new HashSet<>();
+        for (int i = 0; i < nums2.length; i++) {
+            if (set1.contains(nums2[i])) {
+                res.add(nums2[i]);
+            }
+        }
+        return res.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    private Set<Integer> toSet2(int [] nums1){
+        Set a = new HashSet<Integer>();
+        for (int i = 0; i < nums1.length; i++) {
+            a.add(nums1[i]);
+        }
+        return a;
+    }
 }
