@@ -2316,6 +2316,62 @@ public class testAlgorithm {
 //            System.out.println(i);
 //        }
 
-        System.out.println(reverseVowels("hello"));
+//        System.out.println(reverseVowels("hello"));
+        boolean perfectSquare = isPerfectSquare(16);
+        System.out.println(perfectSquare);
     }
+
+
+    public boolean isPerfectSquare(int num) {
+        int originalValue = num;
+        if(num<0) return false;
+        if(num == 1 )return true;
+        if(num/2>0){
+            num /= 2;
+            if (num * num <= originalValue) {
+                return func(num, originalValue,originalValue);
+            }
+            if (num * num > originalValue) {
+                return func(1,num-1,originalValue);
+            }
+        }
+        return false;
+    }
+
+
+    public boolean func(int begin, int right, int originalValue){
+        if(begin > right) return false;
+        int num = (right - begin) /2;
+        if (num * num <= originalValue) {
+            return func(num, originalValue,originalValue);
+        }
+        if (num * num > originalValue) {
+            return func(1,num-1,originalValue);
+        }
+        return false;
+    }
+
+
+    public boolean isPerfectSquareFalse(int num) {
+        int l = 0, r = num;
+        while(l<r){
+            int mid = l + r + 1 >> 1;
+            if(mid * mid<= num) l=mid;
+            else r = mid-1;
+        }
+        return l * l == num;
+    }
+
+
+    public boolean isPerfectSquareTrue(int num) {
+        long l = 0, r = num;
+        while(l<r){
+            long mid = l + r + 1 >> 1;
+            if(mid * mid<= num) l=mid;
+            else r = mid-1;
+        }
+        return l * l == num;
+
+    }
+
 }
