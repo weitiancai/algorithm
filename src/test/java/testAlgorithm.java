@@ -2374,4 +2374,52 @@ public class testAlgorithm {
 
     }
 
+
+//    public boolean isPerfectSquare(int num) {
+//        long l = 0, r = num;
+//        while(l<r){
+//            long mid = l + r + 1 >> 1;
+//            if(mid * mid<= num) l=mid;
+//            else r = mid-1;
+//        }
+//        return l * l == num;
+//
+//        //  l 为啥要是 0 开头呢  =1 就会无限循环
+//        long l = 1, r = num;
+//        while(l<r){
+//            long mid = l + r + 1 >> 1;
+//            if(mid * mid<= num) l=mid;
+//            else r = mid-1;
+//        }
+//        return l * l == num;
+//
+//    }
+//    这样也是 infinite loop
+//    long l = 0, r = num;
+//            while(l<r){
+//        long mid = l + r + 1 >> 1;
+//        if(mid * mid>= num) r=mid;
+//        else l = mid+1;
+//    }
+//            return l * l == num;
+    // 一定要在确定的时候逼近，不然会无限云鬟，不能>= 的时候确定一个事情
+//    long l = 0, r = num;
+//            while(l<r){
+//        long mid = l + r + 1 >> 1;
+//        if(mid * mid > num) r=mid -1;
+//        else l = mid;
+//    }
+//            return l * l == num;
+//    或者 分三段这样更确定
+//        所以和 1无关
+//    public boolean isPerfectSquare(int num) {
+//        long l = 1, r = num;
+//        while(l<r){
+//            long mid = l + r + 1 >> 1;
+//            if(mid * mid > num) r = mid - 1;
+//            else if(mid*mid<num) l = mid + 1;
+//            else return true;
+//        }
+//        return l * l == num;
+//    }
 }
