@@ -2422,4 +2422,80 @@ public class testAlgorithm {
 //        }
 //        return l * l == num;
 //    }
+
+    @Test
+    public void eyx() {
+        HashMap<String, String> map = new HashMap<>();
+        boolean b = map.containsKey(null);
+        System.out.println(b); // false
+        System.out.println(map.get(null)); // null
+        map.put(null, null);
+        System.out.println(map.get(null));// null
+        boolean b2 = map.containsKey(null); //!! 因为返回的是 node<key = null, value = null> 但不是 null 所以有包含
+        System.out.println(b2);  // true
+        map.put(null, "value");
+        System.out.println(map.get(null)); //value
+        boolean b3 = map.containsKey(null);
+        System.out.println(b3); // true
+        // 所以说二一型的问题不存在一个是get一个不存在的值和已存在的值为闹的值都是闹但是呢？我可以通过抗探器来判断是否有这个k真实存在真实存在的职位脑，还是说不存在返回脑？
+        // 即使 key 为 null 也不干扰二义性的排查
+        // value 为 null 或根本没有 key 时的返回 value 都是 null
+        Iterator<String> iterator = map.keySet().iterator();
+
+        ConcurrentHashMap<String,String> c = new ConcurrentHashMap<String,String>();
+        //c.put(null,null);
+        //if (key == null || value == null) throw new NullPointerException();
+        // 为了保证线程安全，无法区分并发状态下的 数据是否真的为 null 还是没有 key
+    }
+
+
+
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode newList = new ListNode();
+        ListNode dummyNode = new ListNode();
+        ListNode head = dummyNode;
+
+        while(list1 !=null || list2!=null){
+            if(list1 !=null && list2==null){
+                newList = new ListNode(list1.val);
+                list1 = list1.next;
+            }if(list2 !=null && list1==null){
+                newList = new ListNode(list2.val);
+                list2 = list2.next;
+            }if(list1 !=null && list2 !=null){
+                if(list1.val <= list2.val){
+                    newList = new ListNode(list1.val);
+                    list1 = list1.next;
+                }else{
+                    newList = new ListNode(list2.val);
+                    list2 = list2.next;
+                }
+            }
+            head.next = newList;
+            head = newList;
+        }
+
+        return dummyNode.next;
+    }
+
+    public ListNode reverseBetweenMy(ListNode head, int left, int right) {
+        ListNode vitualNode= new ListNode();
+        vitualNode.next = head;
+        ListNode h = vitualNode,l= head,r;
+        //h->l
+        for (int i = 1; i < left; i++) {
+            h = h.next;
+            l = l.next;
+        }
+        int n = right - left;
+        // h-l-r
+        // h-r-l
+        for (int i = 0; i < n; i++) {
+            r = l.next;
+            l.next = r.next;
+            r.next = h.next;
+            h.next = r;
+        }
+        return vitualNode.next;
+    }
 }
