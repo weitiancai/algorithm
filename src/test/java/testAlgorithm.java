@@ -2512,4 +2512,39 @@ public class testAlgorithm {
             return list2;
         }
     }
+
+
+    public int maxProfit(int[] prices) {
+
+        int length = prices.length;
+//        dp[i] = (dp[i-1],prices[i]-min)
+
+        int dp[] = new int[length];
+        dp[0] = 0;
+        int min = Math.min(Integer.MAX_VALUE,prices[0]);
+        int max = Integer.MIN_VALUE;
+        if(length == 1) return 0;
+        for (int i = 1; i < length; i++) {
+            min = Math.min(min,prices[i]);
+            int left = prices[i] - min;
+            dp[i] = Math.max(dp[i - 1], left < 0 ? 0 : left);
+            max = Math.max(dp[i],max);
+        }
+        return max;
+    }
+
+
+    public int missingNumber(int[] nums) {
+        boolean[] nums2 = new boolean[nums.length + 1];
+        for (int i = 0; i < nums.length; i++) {
+            nums2[nums[i]] = true;
+        }
+        int res =0 ;
+        for (int i = 0; i < nums2.length; i++) {
+            if(!nums2[i]){
+                res = i;
+            }
+        }
+        return res;
+    }
 }

@@ -18,7 +18,7 @@ public class myThreadDispatch implements Runnable{
     private void arriveHere(){
         synchronized (this) {
             arrive = true;
-            notifyAll();
+            notify();
         }
     }
 
