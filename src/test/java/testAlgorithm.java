@@ -2547,4 +2547,19 @@ public class testAlgorithm {
         }
         return res;
     }
+
+    public boolean detectCapitalUse(String word) {
+        int length = word.length();
+        int count = 0;
+        int lastUpWordInex = -1;
+        char[] charArray = word.toCharArray();
+        for (int i = 0; i < length; i++) {
+            if('A' <= charArray[i] && charArray[i] <= 'Z'){
+                count++;
+                lastUpWordInex = i;
+            }
+        }
+
+        return count == 0 || count == length ||(lastUpWordInex ==0 && count ==1);
+    }
 }
