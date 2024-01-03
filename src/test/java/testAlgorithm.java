@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.DelayQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.Collectors;
@@ -2561,5 +2563,10 @@ public class testAlgorithm {
         }
 
         return count == 0 || count == length ||(lastUpWordInex ==0 && count ==1);
+    }
+
+    @Test
+    public void testQueue(){
+        Queue queue = new DelayQueue();
     }
 }

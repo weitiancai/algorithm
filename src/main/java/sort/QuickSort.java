@@ -1,5 +1,7 @@
 package sort;
 
+import org.junit.Test;
+
 import java.util.Arrays;
 
 public class QuickSort {
@@ -67,4 +69,41 @@ public class QuickSort {
         myQuickSort( arr, 0, i-1);
         myQuickSort( arr, i+1,right);
     }
+
+
+
+    @Test
+    public  void quickS() {
+        int[] array = {6,5,5,6,6,7};
+        int left = 0, right = array.length-1;
+        myquickSort(array,left,right);
+        for (int num : array) {
+            System.out.println(num+" ");
+        }
+    }
+
+    private static void myquickSort(int[] array, int left, int right) {
+        if(left < right){
+            int pivotIndex = partition(array,left,right);
+            myquickSort(array, left, pivotIndex - 1);
+            myquickSort(array, pivotIndex+1, right);
+        }
+    }
+
+    public static int partition(int[] array, int low,int high){
+        int pivot = array[low];
+        while(low < high){
+            while(low < high && array[high] >= pivot){
+                high--;
+            }
+            array[low] = array[high];
+            while(low < high && array[low] <= pivot){
+                low++;
+            }
+            array[high] = array[low];
+        }
+        array[low] = pivot;
+        return low;
+    }
+
 }

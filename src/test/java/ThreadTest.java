@@ -31,5 +31,15 @@ public class ThreadTest {
 
     }
 
+    public void test(){
 
+    }
+
+    public int test(int qa){
+        return 0;
+    }
+
+    public int test(boolean qa){
+        return 0;
+    }
 }
