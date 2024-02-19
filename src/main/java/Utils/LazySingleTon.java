@@ -1,5 +1,7 @@
 package Utils;
 
+import org.springframework.context.annotation.Lazy;
+
 public class LazySingleTon {
     private static LazySingleTon instance = null;
 

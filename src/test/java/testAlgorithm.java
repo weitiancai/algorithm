@@ -2569,4 +2569,86 @@ public class testAlgorithm {
     public void testQueue(){
         Queue queue = new DelayQueue();
     }
+
+
+    public int minCostClimbingStairs(int[] cost) {
+        int n = cost.length;
+        int[] dp = new int[n+1];
+        dp[0] = 0;
+        dp[1] = 0;
+        for (int i = 2; i <=n; i++) {
+            dp[i] = Math.min(dp[i-1] + cost[i-1],
+                    dp[i-2] + cost[i-2]);
+        }
+        return dp[n];
+    }
+
+
+//    public int findShortestSubArray(int[] nums) {
+//        Map<Integer, Integer> count = new HashMap<>();
+//        Map<Integer, Integer> firstIndex = new HashMap<>();
+//        Map<Integer, Integer> lastIndex = new HashMap<>();
+//        int maxFreq = 0;
+//
+//        for (int i = 0; i < nums.length; i++) {
+//            // key -count
+//            count.put(nums[i],count.getOrDefault(nums[i],0) +1);
+//            // firstIndex
+//            if(!firstIndex.containsKey(nums[i])){
+//                firstIndex.put(nums[i], i);
+//            }
+//            lastIndex.put(nums[i], i);
+//            maxFreq = Math.max(maxFreq, count.get(nums[i]));
+//        }
+//        int minLen = nums.length;
+//
+//        for (int i = 0; i < nums.length; i++) {
+//            if(count.get(nums[i]) == maxFreq){
+//                maxFreq
+//            }
+//        }
+//    }
+   // 后序遍历一棵树
+//    List<Integer> res = new ArrayList();
+//    public List<Integer> postorder(Node root) {
+//        helper(root);
+//        return res;
+//    }
+//
+//
+//    public void helper(Node root) {
+//        if(root == null){
+//            return;
+//        }
+////        if(root.left != null){
+////            postorder2(root.left);
+////        }
+////        if(root.right != null){
+////            postorder2(root.right);
+////        }
+//        for(Node ch : root.children){
+//            helper(ch);
+//        }
+//        res.add(root.val);
+//    }
+
+    public void levelOrder(Node node){
+        if(node == null) return;
+        Queue<Node> queue = new LinkedList<>();
+        List<Integer> ans = new ArrayList<>();
+        queue.offer(node);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            // 不需要for了
+//            for (int i = 0; i < size; i++) {
+                Node poll = queue.poll();
+                ans.add(poll.value);
+                if (poll.left != null) {
+                    queue.offer(poll.left);
+                }if (poll.right != null) {
+                    queue.offer(poll.right);
+                }
+//            }
+        }
+    }
 }
