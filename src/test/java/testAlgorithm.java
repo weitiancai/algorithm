@@ -2480,6 +2480,59 @@ public class testAlgorithm {
         return dummyNode.next;
     }
 
+    public ListNode mergeTwoListsNew(ListNode list1, ListNode list2) {
+        // 这样是错的，其实只把result遍历过去了，没有把前面和result 连接起来
+//        ListNode result = null;
+//        ListNode dummyNode = new ListNode();
+//        dummyNode.next = result;
+//        while (list1 != null && list2 != null) {
+//            if( list1.val > list2.val){
+//                result = list2;
+//                list2 =list2.next;
+//            }else {
+//                result = list1;
+//                list1 = list1.next;
+//            }
+//            result = result.next;
+//        }
+//        if(list1 == null) {
+//            result = list2;
+//        } else if (list2 == null) {
+//            result = list1;
+//        }
+//        return dummyNode.next;
+        // 牢记 链表遍历：需要两个节点三个变量
+        ListNode right = new ListNode();
+        ListNode mid = new ListNode();
+        ListNode left = mid;
+        while (list1 != null && list2 != null) {
+            if( list1.val > list2.val){
+                right = list2;
+                list2 =list2.next;
+            }else {
+                right = list1;
+                list1 = list1.next;
+            }
+            mid.next = right;
+            mid = right;
+        }
+        if(list1 == null) {
+            right = list2;
+            mid.next = right;
+        } else if (list2 == null) {
+            right = list1;
+            mid.next = right;
+        }
+        return left.next;
+    }
+
+    @Test
+    public void testLists(){
+        genListNode(new int[]{1, 2, 3});
+        ListNode listNode = mergeTwoListsNew(genListNode(new int[]{1, 2, 3, 4}), genListNode(new int[]{2, 3, 4}));
+        showListNode(listNode);
+    }
+
     public ListNode reverseBetweenMy(ListNode head, int left, int right) {
         ListNode vitualNode= new ListNode();
         vitualNode.next = head;
@@ -2512,6 +2565,47 @@ public class testAlgorithm {
         } else{
             list2.next = mergeTwoLists2(list1,list2.next);
             return list2;
+        }
+    }
+
+
+    public void moveZeroes(int[] nums) {
+        // 错误
+        int tmp;
+        int length = nums.length;
+        int i = 0, j = length - 1;
+        while(i < j){
+            while(nums[i]!=0) i++;
+            while(nums[j]==0) j--;
+            tmp = nums[i];
+            nums[i]=nums[j];
+            nums[j] = tmp;
+            i++;j--;
+        }
+    }
+
+
+    public void moveZeroes2For(int[] nums) {
+        int tmp;
+        int length = nums.length;
+        int j = 0;
+        for (int i = 0; i < length; i++) {
+            if(nums[i] != 0){
+                nums[j++] = nums[i];
+            }
+        }
+        for (int i = j; i < length; i++) {
+            nums[i] = 0;
+        }
+    }
+
+
+    @Test
+    public void testMove(){
+        int[] nums = {0,1,0,3,12};
+        moveZeroes(nums);
+        for (int i = 0; i < nums.length; i++) {
+            System.out.println(nums[i]);
         }
     }
 
@@ -2693,5 +2787,49 @@ public class testAlgorithm {
             map.put(n,result);
             return result;
         }
+    }
+
+
+    public List<Integer> findDisappearedNumbers(int[] nums) {
+        boolean newNum[] = new boolean[nums.length+1];
+        for (int i = 0; i < nums.length; i++) {
+            newNum[nums[i]] = true;
+        }
+        List<Integer> res = new ArrayList<>();
+        for (int i = 1; i <= nums.length; i++) {
+            if(!newNum[i]){
+                res.add(i);
+            }
+        }
+        return res;
+    }
+
+    public List<Integer> findDisappearedNumbersOn(int[] nums) {
+        int length = nums.length;
+        for (int i = 0; i < length; i++) {
+            nums[nums[i] - 1] = 0;
+        }
+        List<Integer> res = new ArrayList<>();
+        for (int i = 0; i < length; i++) {
+            if(nums[i] != 0){
+                res.add(i+1);
+            }
+        }
+        return res;
+    }
+// 消失的数字
+    public List<Integer> findDisappearedNumbersO1(int[] nums) {
+        int n = nums.length;
+        for (int num : nums) {
+            int x = (num -1) % n;
+            nums[x] += n;
+        }
+        List<Integer> res = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            if(nums[i] <= n){
+                res.add(i+1);
+            }
+        }
+        return res;
     }
 }
