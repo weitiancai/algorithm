@@ -2651,4 +2651,47 @@ public class testAlgorithm {
 //            }
         }
     }
+
+
+    //爬楼梯  遍历版本
+    public int climbStairs(int n) {
+        if(n==1) return 1;
+        if(n==2) return 2;
+        int pre = 2,prepre = 1, result= 0;
+        for (int i = 3; i <=n ; i++) {
+            result = pre+prepre;
+            prepre = pre;
+            pre = result;
+        }
+        return result;
+    }
+// 爬楼梯  递归版本
+
+    //递归变量一定要用全局变量
+    Map<Integer, Integer> map = new HashMap<>();
+    public int climbStairs2(int n) {
+        if(n == 1) return 1;
+        else if(n == 2) return 2;
+        else if(map.containsKey(n)){
+            return map.get(n);
+        }
+        else {
+            int result = climbStairs(n - 1) + climbStairs(n - 2);
+            map.put(n, result);
+            return result;
+        }
+    }
+    // 斐波那契数列， 非递归版本省略
+    Map<Integer,Integer> map2 = new HashMap<>();
+    public int fib(int n) {
+        if(n==1) return 1;
+        else if(n==0) return 0;
+        else if(map.containsKey(n)){
+            return map.get(n);
+        }else{
+            int result = fib(n-1)+ fib(n-2);
+            map.put(n,result);
+            return result;
+        }
+    }
 }
