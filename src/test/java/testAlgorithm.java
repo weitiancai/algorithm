@@ -2832,4 +2832,35 @@ public class testAlgorithm {
         }
         return res;
     }
+
+
+    public ListNode deleteDuplicatesMy(ListNode head) {
+        ListNode left = new ListNode();
+        ListNode pre = new ListNode();
+        pre.next =head;
+        left.next = pre;
+        ListNode dommyNode = pre;
+        while(head!=null){
+            left = pre;
+            pre = head;
+            head = head.next;
+            while(head != null && head.val == pre.val){
+                pre.next = head.next;
+                head = head.next;
+            }
+        }
+        return dommyNode.next;
+    }
+
+    public ListNode deleteDuplicatesT(ListNode head) {
+        ListNode pre = head;
+        while(head!=null){
+            if(head.next != null && head.val == head.next.val){
+                head.next = head.next.next;
+            }else{
+                head = head.next;
+            }
+        }
+        return pre;
+    }
 }
