@@ -2863,4 +2863,35 @@ public class testAlgorithm {
         }
         return pre;
     }
+    public boolean hasCycleSimple(ListNode head) {
+        ListNode fast = head;
+        ListNode slow = head;
+        while(true){
+            if(fast == null || fast.next == null) return false;
+            fast = fast.next.next;
+            slow = slow.next;
+            if(fast == slow) break;
+        }
+        return true;
+    }
+
+    public class Solution {
+        public ListNode detectCycle(ListNode head) {
+            if (head == null) return null;
+            ListNode slowNode = head;
+            ListNode fastNode = head;
+            while (true) {
+                if (fastNode == null || fastNode.next == null) return null;
+                fastNode = fastNode.next.next;
+                slowNode = slowNode.next;
+                if (fastNode == slowNode) break;
+            }
+            slowNode = head;
+            while (slowNode != fastNode) {
+                fastNode = fastNode.next;
+                slowNode = slowNode.next;
+            }
+            return slowNode;
+        }
+    }
 }
