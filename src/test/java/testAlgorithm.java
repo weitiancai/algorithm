@@ -2894,4 +2894,60 @@ public class testAlgorithm {
             return slowNode;
         }
     }
+
+    public ListNode getIntersectionNode2(ListNode headA, ListNode headB) {
+        int L1 = 0,L2 = 0, diff = 0;
+        ListNode head1 = headA, head2 = headB;
+        while (head1 != null) {
+            L1++;
+            head1=head1.next;
+        }
+        while(head2 != null){
+            L2 ++;
+            head2 = head2.next;
+        }
+        if(L1<L2){
+            head1 = headB;
+            head2 = headA; diff = L2 -L1;
+        }else{
+            head1=headA;head2 = headB;
+            diff = L1 - L2;
+        }
+        for (int i = 0; i < diff; i++) {
+            head1= head1.next;
+        }
+        while(head1 != null && head2 != null){
+            if(head1==head2) return head1;
+            head1= head1.next;
+            head2 = head2.next;
+        }
+        return null;
+    }
+
+    public ListNode reverseListtrue(ListNode head) {
+        ListNode l = null;
+        ListNode m = head;
+        ListNode r = null;
+        while(m != null){
+            r = m.next;
+            m.next = l;
+            l = m;
+            m = r;
+        }
+        return l;
+    }
+
+    public ListNode reverseListmy(ListNode head) {
+        if (head == null) return null;
+        ListNode dummyNode = new ListNode();
+        dummyNode.next = head;
+        ListNode follow = head.next;
+        while (follow != null) {
+            head.next = follow.next;
+            follow.next = dummyNode.next;
+            dummyNode.next = follow;
+            follow = head.next;
+        }
+        return dummyNode.next;
+    }
 }
